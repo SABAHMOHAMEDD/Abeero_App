@@ -1,8 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants.dart';
-import '../../onboarding/on_board_screen.dart';
+import '../core/constants.dart';
+import 'control_view.dart';
+import 'on_boarding_view.dart';
 
 class SplashScreen extends StatelessWidget {
   static const routeName = "SplashScreen";
@@ -30,7 +31,7 @@ class SplashScreen extends StatelessWidget {
           ),
         ],
       ),
-      nextScreen: OnBoardScreen(),
+      nextScreen:  OnBoardScreen(),
       splashTransition: SplashTransition.sizeTransition,
 
       //pageTransitionType: PageTransitionType.downToUp,

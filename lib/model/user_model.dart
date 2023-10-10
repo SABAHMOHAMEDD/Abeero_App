@@ -1,33 +1,30 @@
 class UserModel {
+  String? userId;
+
   String? name;
   String? email;
-  String? uId;
-  int? userBubbleColorId;
   String? userImage;
 
   UserModel({
+    this.userId,
     this.name,
     this.email,
-    this.uId,
-    this.userBubbleColorId,
     this.userImage,
   });
 
   UserModel.fromJson(Map<String, dynamic> json)
       : this(
+          userId: json['userId'],
           name: json['name'],
           email: json['email'],
-          uId: json['uId'],
-          userBubbleColorId: json['userBubbleColorId'],
           userImage: json['userImage'],
         );
 
   Map<String, dynamic> toJson() {
     return {
+      'userId': userId,
       'name': name,
       'email': email,
-      'uId': uId,
-      'userBubbleColorId': userBubbleColorId,
       'userImage': userImage,
     };
   }

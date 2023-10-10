@@ -1,3 +1,4 @@
+import 'package:abeero/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -9,7 +10,8 @@ class CustomTextFormField extends StatelessWidget {
   String? Function(String?)? validator;
 
   CustomTextFormField(
-      {this.hintText,
+      {super.key,
+      this.hintText,
       this.hintTextColor,
       this.onchanged,
       this.validator,
@@ -18,32 +20,36 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 60,
       child: TextFormField(
         obscureText: obscureText,
         validator: validator,
         onChanged: onchanged,
-        style: TextStyle(color: Colors.white, decoration: TextDecoration.none),
-        cursorColor: Colors.blueGrey.shade100,
+        style: const TextStyle(
+            color: Colors.black54, decoration: TextDecoration.none),
+        cursorColor: KPrimaryColor,
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(color: hintTextColor),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                )),
-            enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                borderSide: BorderSide(color: Colors.white)),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                borderSide: BorderSide(color: Colors.white))),
+            border: InputBorder.none
+            // focusedBorder: const OutlineInputBorder(
+            //     borderSide: BorderSide(color: Colors.grey),
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(8),
+            //     )),
+            // enabledBorder: const OutlineInputBorder(
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(8),
+            //     ),
+            //     borderSide: BorderSide(color: Colors.grey)),
+            // border: const OutlineInputBorder(
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(8),
+            //     ),
+            //     borderSide: BorderSide(color: Colors.grey))
+
+            ),
       ),
     );
   }

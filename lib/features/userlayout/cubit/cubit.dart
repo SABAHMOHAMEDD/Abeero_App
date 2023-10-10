@@ -1,11 +1,11 @@
-import 'package:abeero/features/layout/cubit/states.dart';
+import 'package:abeero/features/userlayout/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cart/pages/cart_screen.dart';
 import '../../favourites/pages/favourites_screen.dart';
 import '../../home/pages/home_screen.dart';
-import '../../profile/pages/profile_screen.dart';
+import '../../../view/profile_view.dart';
 
 class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(IntialState()); // need intial state in the super
@@ -16,10 +16,10 @@ class LayoutCubit extends Cubit<LayoutStates> {
     HomeScreen(),
     CartScreen(),
     FavouritesScreen(),
-    profileScreen()
+    ProfileView()
   ];
 
-  void Changebottom(int index) {
+  void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(ChageBottomNavState());
   }
