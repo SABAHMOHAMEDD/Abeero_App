@@ -1,11 +1,12 @@
+import 'package:abeero/view/widgets/custom_button.dart';
+import 'package:abeero/view/widgets/custom_text_field.dart';
 import 'package:abeero/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../core/constants.dart';
-import '../core/widgets/custom_button.dart';
-import '../core/widgets/custom_text_field.dart';
+import '../../core/constants.dart';
+
 import 'SignIn_view.dart';
 
 class SignUpView extends GetWidget<AuthViewModel> {
@@ -25,7 +26,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
             progressIndicator: const CircularProgressIndicator(
               color: Colors.white,
             ),
-            inAsyncCall: controller.isLoading,
+            inAsyncCall: controller.isLoading.value,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 36),
               child: SingleChildScrollView(

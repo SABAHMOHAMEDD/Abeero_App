@@ -2,10 +2,10 @@ import 'package:abeero/core/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../core/cache_helper.dart';
-import '../../core/constants.dart';
-import 'SignIn_view.dart';
-import 'control_view.dart';
+import '../../../core/cache_helper.dart';
+import '../../../core/constants.dart';
+import '../Auth/SignIn_view.dart';
+import '../control_view.dart';
 
 class OnBoardScreen extends StatefulWidget {
   static const String RouteName = 'onBoarding';
@@ -31,7 +31,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
+            const Expanded(
+                flex: 1,
+                child: SizedBox()),
             Expanded(
               flex: 6,
               child: PageView.builder(
@@ -105,7 +107,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         color: KPrimaryColor),
                     child: MaterialButton(
                       onPressed: () {
-                        navigateTo(context, ControlView());
+                        navigateTo(context, const ControlView());
                       },
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,

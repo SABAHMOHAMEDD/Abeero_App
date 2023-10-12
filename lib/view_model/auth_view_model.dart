@@ -1,19 +1,22 @@
 import 'package:abeero/core/constants.dart';
 import 'package:abeero/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../core/services/firestore_user.dart';
-import '../features/userlayout/layout_screen.dart';
+import '../view/layout_view.dart';
 
 class AuthViewModel extends GetxController {
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
+  ValueNotifier<bool> get isLoading => _isLoading;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FacebookLogin _facebookLogin = FacebookLogin(debug: true);
   String? email, password, name;
-  bool isLoading = false;
 
   final Rxn<User> _user = Rxn<User>();
   String? get user => _user.value?.email;
@@ -53,19 +56,19 @@ class AuthViewModel extends GetxController {
   }
 
   void signInWithEmailAndPassword() async {
-    isLoading = true;
+    _isLoading.value = true;
     try {
       await _auth
           .signInWithEmailAndPassword(email: email!, password: password!)
           .then((value) {
-        isLoading = false;
+        _isLoading.value = false;
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
         print(value);
         Get.offAll(LayoutScreen());
       });
     } catch (error) {
-      isLoading = false;
+      _isLoading.value = false;
 
       print(error.toString());
       Get.snackbar('Error Login account', error.toString(),
@@ -74,12 +77,12 @@ class AuthViewModel extends GetxController {
   }
 
   void signUpWithEmailAndPassword() async {
-    isLoading = true;
+    _isLoading.value = true;
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) {
-        isLoading = false;
+        _isLoading.value = false;
         saveUserData(user);
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
@@ -87,7 +90,7 @@ class AuthViewModel extends GetxController {
         Get.offAll(LayoutScreen());
       });
     } catch (error) {
-      isLoading = false;
+      _isLoading.value = false;
 
       print(error.toString());
       Get.snackbar('Error create account', error.toString(),

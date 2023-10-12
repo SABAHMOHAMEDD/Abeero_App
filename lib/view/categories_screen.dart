@@ -1,119 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../../core/constants.dart';
-import '../../../core/navigation.dart';
-import '../../category/pages/categories_screen.dart';
+import '../core/constants.dart';
 
-class HomeScreen extends StatelessWidget {
-  List<Banners>? banners = [
-    Banners(image: "assets/images/img.png"),
-    Banners(image: "assets/images/banner2.jpg"),
-    Banners(image: "assets/images/banner3.jpg"),
-  ];
-
+class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: Column(
-        children: [
-          // const Expanded(flex: 1, child: SizedBox()),
-          const Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Choose \n  Your Art..',
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                        color: KPrimaryColor),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        navigateTo(context, CategoryScreen());
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: KSecondryColor,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Category Name",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              )),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(
-                        width: 10,
-                      ),
-                  itemCount: 10),
-            ),
-          ),
-          const Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'New Release',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: KPrimaryColor),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Expanded(flex: 7, child: NewReleaseGrid()),
-        ],
-      )),
-    );
+    return const Scaffold(
+        body: Column(
+      children: [
+        Expanded(flex: 7, child: CategoryGrid()),
+      ],
+    ));
   }
 }
 
-class Banners {
-  String image;
-
-  Banners({
-    required this.image,
-  });
-}
-
-class NewReleaseGrid extends StatelessWidget {
-  const NewReleaseGrid({super.key});
+class CategoryGrid extends StatelessWidget {
+  const CategoryGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +32,7 @@ class NewReleaseGrid extends StatelessWidget {
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
             onTap: () {},
-            child: const NewReleaseTile(),
+            child: const CategoryTile(),
           );
         },
         gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -139,8 +42,8 @@ class NewReleaseGrid extends StatelessWidget {
   }
 }
 
-class NewReleaseTile extends StatelessWidget {
-  const NewReleaseTile({super.key});
+class CategoryTile extends StatelessWidget {
+  const CategoryTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +65,7 @@ class NewReleaseTile extends StatelessWidget {
                     child: Image(
                       width: double.infinity,
                       height: 170,
-                      image: AssetImage('assets/images/img.png'),
+                      image: AssetImage('assets/images/img_2.png'),
                       fit: BoxFit.cover,
                     ),
                   ),

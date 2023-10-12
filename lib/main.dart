@@ -1,19 +1,17 @@
 import 'package:abeero/core/binding.dart';
 import 'package:abeero/core/constants.dart';
-import 'package:abeero/view/on_boarding_view.dart';
-import 'package:abeero/view/signUp_view.dart';
-import 'package:abeero/view/splash_view.dart';
+import 'package:abeero/view/Auth/SignIn_view.dart';
+import 'package:abeero/view/control_view.dart';
+import 'package:abeero/view/Splash/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-import 'core/bloc_observer.dart';
 import 'features/userlayout/cubit/cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  Bloc.observer = MyBlocObserver();
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,13 +33,16 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         initialBinding: Binding(),
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
         theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white
+          ),
           fontFamily: 'jannah',
           colorScheme: ColorScheme.fromSeed(seedColor: KPrimaryColor),
           useMaterial3: true,
         ),
-        home: SplashScreen(),
+        home:  SplashScreen(),
       ),
     );
   }
