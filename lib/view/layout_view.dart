@@ -1,15 +1,25 @@
 import 'package:abeero/core/IconBroken.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../core/constants.dart';
 import '../view_model/control_home_view_model.dart';
 
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   static const String RouteName = 'LayoutScreen';
 
   @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  var currentIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
+    double displayWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: GetBuilder<ControlHomeViewModel>(
           init: ControlHomeViewModel(),
@@ -26,99 +36,126 @@ class LayoutScreen extends StatelessWidget {
                         color: KPrimaryColor, fontWeight: FontWeight.w600),
                   ),
                 ),
+
                 body: controller.bottomScreens[controller.currentIndex],
                 bottomNavigationBar: Container(
-                  height: 68,
-                  margin: const EdgeInsets.only(
-                      bottom: 10, left: 20, right: 20, top: 10),
+                  margin: EdgeInsets.all(displayWidth * .05),
+                  height: displayWidth * .155,
                   decoration: BoxDecoration(
-                    color: Colors
-                        .transparent, // Set background color to transparent
-
-                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          offset: const Offset(0, 8),
-                          blurRadius: 4,
-                          color: KPrimaryColor.withOpacity(0.23))
+                        color: Colors.black.withOpacity(.1),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
+                      ),
+                      BoxShadow(
+                          offset: const Offset(5, 5),
+                          blurRadius: 2,
+                          color: KPrimaryColor.withOpacity(0.23)),
                     ],
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: BottomNavigationBar(
-                      mouseCursor: MouseCursor.uncontrolled,
-                      backgroundColor: KPrimaryColor,
-                      elevation: 0,
-                      type: BottomNavigationBarType.fixed,
-                      showUnselectedLabels: true,
-                      showSelectedLabels: true,
-                      selectedItemColor: Colors.white.withOpacity(0.9),
-                      unselectedLabelStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.6)),
-                      unselectedItemColor: Colors.white.withOpacity(0.6),
-                      currentIndex: controller.currentIndex,
-                      onTap: (index) {
+                  child: ListView.builder(
+                    itemCount: 4,
+                    scrollDirection: Axis.horizontal,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: displayWidth * .02),
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = index;
+                          HapticFeedback.lightImpact();
+                        });
                         controller.changeSelectedIndex(index);
+                        HapticFeedback.lightImpact();
                       },
-                      items: const [
-                        BottomNavigationBarItem(
-                            activeIcon: Padding(
-                              padding: EdgeInsets.only(top: 12),
-                              child: Text(
-                                'Home',
-                                style: TextStyle(color: Colors.white),
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: Stack(
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                            width: index == currentIndex
+                                ? displayWidth * .32
+                                : displayWidth * .18,
+                            alignment: Alignment.center,
+                            child: AnimatedContainer(
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              height: index == currentIndex
+                                  ? displayWidth * .12
+                                  : 0,
+                              width: index == currentIndex
+                                  ? displayWidth * .32
+                                  : 0,
+                              decoration: BoxDecoration(
+                                color: index == currentIndex
+                                    ? KPrimaryColor.withOpacity(.2)
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(50),
                               ),
                             ),
-                            backgroundColor: KPrimaryColor,
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Icon(IconBroken.Home),
+                          ),
+                          AnimatedContainer(
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                            width: index == currentIndex
+                                ? displayWidth * .31
+                                : displayWidth * .18,
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                Row(
+                                  children: [
+                                    AnimatedContainer(
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      width: index == currentIndex
+                                          ? displayWidth * .13
+                                          : 0,
+                                    ),
+                                    AnimatedOpacity(
+                                      opacity: index == currentIndex ? 1 : 0,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      child: Text(
+                                        index == currentIndex
+                                            ? listOfStrings[index]
+                                            : '',
+                                        style: const TextStyle(
+                                          color: KPrimaryColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    AnimatedContainer(
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      width: index == currentIndex
+                                          ? displayWidth * .03
+                                          : 20,
+                                    ),
+                                    Icon(
+                                      listOfIcons[index],
+                                      size: displayWidth * .076,
+                                      color: index == currentIndex
+                                          ? KPrimaryColor
+                                          : Colors.black26,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            label: ''),
-                        BottomNavigationBarItem(
-                            activeIcon: Padding(
-                              padding: EdgeInsets.only(top: 12),
-                              child: Text(
-                                'Cart',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Icon(
-                                IconBroken.Bag,
-                              ),
-                            ),
-                            label: ''),
-                        BottomNavigationBarItem(
-                            activeIcon: Padding(
-                              padding: EdgeInsets.only(top: 12),
-                              child: Text(
-                                'Favorites',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            backgroundColor: Colors.white,
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Icon(IconBroken.Heart),
-                            ),
-                            label: ''),
-                        BottomNavigationBarItem(
-                            activeIcon: Padding(
-                              padding: EdgeInsets.only(top: 12),
-                              child: Text(
-                                'Profile',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            backgroundColor: Colors.white,
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Icon(IconBroken.Profile),
-                            ),
-                            label: ''),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -126,10 +163,17 @@ class LayoutScreen extends StatelessWidget {
     );
   }
 
-  List<IconData> iconlist = [
-    Icons.home,
-    Icons.shopping_cart,
-    Icons.favorite,
-    Icons.person
+  List<IconData> listOfIcons = [
+    IconBroken.Home,
+    IconBroken.Bag,
+    IconBroken.Heart,
+    IconBroken.Profile,
+  ];
+
+  List<String> listOfStrings = [
+    'Home',
+    'Cart',
+    'Favorite',
+    'Account',
   ];
 }

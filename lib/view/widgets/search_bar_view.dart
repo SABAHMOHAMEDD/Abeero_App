@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../core/constants.dart';
 
-
 class SearchBarView extends StatelessWidget {
   const SearchBarView({super.key});
 
@@ -16,12 +15,17 @@ class SearchBarView extends StatelessWidget {
       height: 54,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(50),
           boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.1),
+              blurRadius: 30,
+              offset: const Offset(0, 10),
+            ),
             BoxShadow(
                 offset: const Offset(5, 5),
                 blurRadius: 2,
-                color: KPrimaryColor.withOpacity(0.23))
+                color: KPrimaryColor.withOpacity(0.23)),
           ]),
       child: Row(
         children: [
