@@ -19,8 +19,8 @@ class SearchBarView extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                offset: const Offset(0, 8),
-                blurRadius: 4,
+                offset: const Offset(5, 5),
+                blurRadius: 2,
                 color: KPrimaryColor.withOpacity(0.23))
           ]),
       child: Row(

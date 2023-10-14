@@ -1,10 +1,8 @@
 import 'package:abeero/core/IconBroken.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../core/constants.dart';
-
 import '../view_model/control_home_view_model.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -31,9 +29,12 @@ class LayoutScreen extends StatelessWidget {
                 body: controller.bottomScreens[controller.currentIndex],
                 bottomNavigationBar: Container(
                   height: 68,
-                  margin:
-                      const EdgeInsets.only(bottom: 25, left: 20, right: 20),
+                  margin: const EdgeInsets.only(
+                      bottom: 10, left: 20, right: 20, top: 10),
                   decoration: BoxDecoration(
+                    color: Colors
+                        .transparent, // Set background color to transparent
+
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
