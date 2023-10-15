@@ -75,6 +75,10 @@ flutter:
     - family: IconBroken
       fonts:
         - asset: assets/icons/icons.ttf
+
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/SFPRODISPLAYREGULAR.OTF
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
