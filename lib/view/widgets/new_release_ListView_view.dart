@@ -20,8 +20,8 @@ class NewReleaseListviewView extends StatelessWidget {
           ? const Center(child: AnimatedLoading())
           : Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: SizedBox(
-                height: screenSize.height / 2.4,
+              child: Container(
+                height: screenSize.height / 2,
                 child: GridView.builder(
                   itemCount: controller.productModel.length,
                   physics: const BouncingScrollPhysics(),
@@ -33,8 +33,8 @@ class NewReleaseListviewView extends StatelessWidget {
                             productModel: controller.productModel[index]));
                       },
                       child: Container(
-                        width: double.infinity,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                             color: Colors.grey.shade50,
                             borderRadius: BorderRadius.circular(10)),
@@ -100,7 +100,7 @@ class NewReleaseListviewView extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
-                      mainAxisExtent: 270),
+                      mainAxisExtent: 290),
                 ),
               ),
             ),

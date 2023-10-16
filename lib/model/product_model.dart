@@ -1,8 +1,12 @@
+import 'dart:ui';
+
+import '../core/extention.dart';
+
 class ProductModel {
   String? name;
   String? productImage;
   String? description;
-  String? color;
+  Color? color;
   String? size;
   String? price;
 
@@ -19,7 +23,7 @@ class ProductModel {
           name: json['name'],
           productImage: json['productImage'],
           description: json['description'],
-          color: json['color'],
+          color: HexColor.fromHex(json['color']),
           size: json['size'],
           price: json['price'],
         );

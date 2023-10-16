@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               // const SizedBox(
               //   height: 20,
@@ -40,11 +40,11 @@ class HomeScreen extends StatelessWidget {
               //   ],
               // ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               const SearchBarView(),
               const SizedBox(
-                height: 40,
+                height: 25,
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -93,9 +93,7 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+
               NewReleaseListviewView(
                 catTitle: catTitle,
               ),

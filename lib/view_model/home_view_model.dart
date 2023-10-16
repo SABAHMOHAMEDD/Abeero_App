@@ -1,8 +1,8 @@
-import 'package:abeero/core/services/home_services.dart';
 import 'package:abeero/model/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../helper/services/home_services.dart';
 import '../model/category_model.dart';
 
 class HomeViewModel extends GetxController {

@@ -24,7 +24,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       child: GetBuilder<ControlHomeViewModel>(
           init: ControlHomeViewModel(),
           builder: (controller) => Scaffold(
-                extendBody: true, //<------like this
+                extendBody: false, //<------like this
 
                 appBar: AppBar(
                   centerTitle: true,
@@ -39,7 +39,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
                 body: controller.bottomScreens[controller.currentIndex],
                 bottomNavigationBar: Container(
-                  margin: EdgeInsets.all(displayWidth * .05),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: displayWidth * .035,
+                      vertical: displayWidth * .035),
                   height: displayWidth * .155,
                   decoration: BoxDecoration(
                     color: Colors.white,

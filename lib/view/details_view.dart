@@ -1,9 +1,12 @@
+import 'package:abeero/model/cart_product_model.dart';
 import 'package:abeero/model/product_model.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../core/IconBroken.dart';
 import '../core/constants.dart';
+import '../view_model/cart_view_model.dart';
 
 class DetailsView extends StatelessWidget {
   const DetailsView({super.key, required this.productModel});
@@ -97,7 +100,8 @@ class DetailsView extends StatelessWidget {
                               height: 45,
                               width: MediaQuery.of(context).size.width * .45,
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Row(
                                 mainAxisAlignment:
@@ -112,13 +116,21 @@ class DetailsView extends StatelessWidget {
                               height: 45,
                               width: MediaQuery.of(context).size.width * .45,
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(8)),
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Text('Color'),
+                                  const Text('Color'),
+                                  Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: productModel.color),
+                                  )
                                 ],
                               ),
                             )
@@ -135,22 +147,21 @@ class DetailsView extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        child: ExpandableText(
-                          productModel.description ?? "",
-                          expandText: 'show more',
-                          collapseText: 'show less',
-                          linkColor: KPrimaryColor,
-                          maxLines: 3,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                              letterSpacing: 0.5),
-                        ),
+                      ExpandableText(
+                        productModel.description ?? "",
+                        expandText: 'show more',
+                        collapseText: 'show less',
+                        linkColor: KPrimaryColor,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            height: 1.7,
+                            fontSize: 14,
+                            color: Colors.grey,
+                            letterSpacing: 0.5),
                       ),
                       Spacer(),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
                               width: 100,
@@ -186,42 +197,53 @@ class DetailsView extends StatelessWidget {
                                   ),
                                 ],
                               )),
-                          Spacer(),
-                          Container(
-                            width: 200,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20)),
-                                color: KPrimaryColor),
-                            child: MaterialButton(
-                              onPressed: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 24),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Icon(
-                                      Icons.shopping_cart_outlined,
-                                      size: 19,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text(
-                                      'Add To Cart',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
+                          GetBuilder<CartViewModel>(
+                            init: CartViewModel(),
+                            builder: (controller) {
+                              return Container(
+                                width: 200,
+                                height: 60,
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20)),
+                                    color: KPrimaryColor),
+                                child: MaterialButton(
+                                  onPressed: () => controller.addProductToCart(
+                                      CartProductModel(
+                                          name: productModel.name,
+                                          productImage:
+                                              productModel.productImage,
+                                          quantity: 1,
+                                          price: productModel.price)),
+                                  child: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 24),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.shopping_cart_outlined,
+                                          size: 19,
                                           color: Colors.white,
-                                          fontSize: 15),
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text(
+                                          'Add To Cart',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         ],
                       ),

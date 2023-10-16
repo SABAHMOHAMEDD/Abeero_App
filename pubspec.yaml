@@ -41,6 +41,11 @@ dependencies:
   dot_navigation_bar: ^1.0.2
   loading_animation_widget: ^1.2.0+4
   expandable_text: ^2.3.0
+  lottie: ^2.6.0
+  conditional_builder_null_safety: ^0.0.6
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
 
 
 
