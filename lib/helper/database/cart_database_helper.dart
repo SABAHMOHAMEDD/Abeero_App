@@ -1,5 +1,6 @@
 import 'package:abeero/core/constants.dart';
 import 'package:abeero/model/cart_product_model.dart';
+import 'package:abeero/model/product_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,7 +26,8 @@ class CartDatabaseHelper {
       $columnName TEXT NOT NULL,
       $columnImage TEXT NOT NULL,
       $columnPrice TEXT NOT NULL,
-      $columnQuantity INTEGER NOT NULL )
+      $columnQuantity INTEGER NOT NULL ,
+      $columnProductId TEXT NOT NULL)
        ''');
     });
   }
@@ -35,6 +37,12 @@ class CartDatabaseHelper {
 
     await dbClient?.insert(tableCartProduct, cartProductModel.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  updateProduct(CartProductModel cartProductModel) async {
+    var dbClient = await database;
+    return await dbClient?.update(tableCartProduct, cartProductModel.toJson(),
+        where: '$columnProductId= ?', whereArgs: [cartProductModel.productId]);
   }
 
   getCartProducts() async {

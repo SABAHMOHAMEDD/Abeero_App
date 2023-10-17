@@ -36,7 +36,8 @@ class NewReleaseListviewView extends StatelessWidget {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Colors.grey.shade50,
+                          color: Colors.grey.shade50,
+                            //color: KScaffoldColor.withOpacity(.4),
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [

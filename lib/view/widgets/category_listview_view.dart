@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants.dart';
-import '../../view/categories_screen.dart';
+import '../../view/categories_view.dart';
 import '../../view_model/home_view_model.dart';
 import 'animated_loading.dart';
 
@@ -34,6 +34,8 @@ class CategoryListviewView extends StatelessWidget {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                             color: Colors.grey.shade50,
+
+                            //color: KScaffoldColor.withOpacity(.4),
                             borderRadius: BorderRadius.circular(15)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

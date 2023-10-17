@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
             ),
           ],
         ),
-        nextScreen:  OnBoardScreen(),
+        nextScreen: OnBoardScreen(),
         splashTransition: SplashTransition.sizeTransition,
 
         //pageTransitionType: PageTransitionType.downToUp,

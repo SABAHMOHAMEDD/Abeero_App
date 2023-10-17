@@ -9,6 +9,7 @@ class ProductModel {
   Color? color;
   String? size;
   String? price;
+  String? productId;
 
   ProductModel(
       {this.name,
@@ -16,7 +17,8 @@ class ProductModel {
       this.description,
       this.color,
       this.size,
-      this.price});
+      this.price,
+      this.productId});
 
   ProductModel.fromJson(Map<String, dynamic> json)
       : this(
@@ -26,6 +28,7 @@ class ProductModel {
           color: HexColor.fromHex(json['color']),
           size: json['size'],
           price: json['price'],
+          productId: json['productId'],
         );
 
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class ProductModel {
       'color': color,
       'size': size,
       'price': price,
+      'productId': productId,
     };
   }
 }

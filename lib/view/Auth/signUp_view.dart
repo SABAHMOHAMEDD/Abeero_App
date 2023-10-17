@@ -137,7 +137,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
                             onTap: () {
                               Navigator.pop(context, SignInView.routeName);
                             },
-                            child:  Text(
+                            child: Text(
                               ' Sign In',
                               style: TextStyle(color: KSecondryColor),
                             ),

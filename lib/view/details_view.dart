@@ -216,7 +216,8 @@ class DetailsView extends StatelessWidget {
                                           productImage:
                                               productModel.productImage,
                                           quantity: 1,
-                                          price: productModel.price)),
+                                          price: productModel.price,
+                                          productId: productModel.productId)),
                                   child: const Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 24),

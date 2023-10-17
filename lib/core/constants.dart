@@ -14,3 +14,6 @@ const String columnName = 'name';
 const String columnImage = 'productImage';
 const String columnQuantity = 'quantity';
 const String columnPrice = 'price';
+const String columnProductId = 'productId';
+
+const String CACHED_USER_DATA = 'CACHED_USER_DATA';

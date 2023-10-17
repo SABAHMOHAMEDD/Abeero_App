@@ -1,15 +1,21 @@
 import 'package:abeero/core/constants.dart';
 import 'package:abeero/model/user_model.dart';
+import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../core/local_storage_data.dart';
 import '../helper/services/firestore_user.dart';
 import '../view/layout_view.dart';
 
 class AuthViewModel extends GetxController {
+  // final LocalStorageData localStorageData = Get.put(LocalStorageData());
+  final LocalStorageData localStorageData = Get.find();
+  final ProfileViewModel profileViewModel = Get.find();
+
   final ValueNotifier<bool> _isLoading = ValueNotifier(false);
   ValueNotifier<bool> get isLoading => _isLoading;
 
@@ -41,8 +47,6 @@ class AuthViewModel extends GetxController {
   }
 
   void facebookSignInMethod() async {
-    print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-
     FacebookLoginResult result = await _facebookLogin.logIn();
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
@@ -51,18 +55,26 @@ class AuthViewModel extends GetxController {
     if (result.status == FacebookLoginStatus.success) {
       final faceCredential = FacebookAuthProvider.credential(accessToken!);
       await _auth.signInWithCredential(faceCredential);
-      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
     }
   }
 
   void signInWithEmailAndPassword() async {
-    _isLoading.value = true;
     try {
+      _isLoading.value = true;
+
       await _auth
           .signInWithEmailAndPassword(email: email!, password: password!)
-          .then((value) {
+          .then((value) async {
+        // await FireStoreUser().getCurrentUser(value.user!.uid).then((value) {
+        //   print("++++++++++++++++++++++++");
+        //   print(value);
+        //   print(value.data());
+        //   print("++++++++++++++++++++++++");
+        //
+        //   // setUserData(UserModel.fromJson(value.data() as Map<String, dynamic>));
+        // });
+
         _isLoading.value = false;
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
         print(value);
         Get.offAll(LayoutScreen());
@@ -98,11 +110,20 @@ class AuthViewModel extends GetxController {
     }
   }
 
+  // save data in firestore//
   void saveUserData(UserCredential user) async {
-    await FireStoreUser().addUserToFireStore(UserModel(
+    UserModel userModel = UserModel(
         userId: user.user?.uid,
         userImage: '',
         name: name ?? user.user?.displayName,
-        email: user.user?.email));
+        email: user.user?.email);
+
+    await FireStoreUser().addUserToFireStore(userModel);
+    setUserData(userModel);
+  }
+
+  // save data in shared prefs//
+  void setUserData(UserModel userModel) async {
+    await localStorageData.setUserData(userModel);
   }
 }

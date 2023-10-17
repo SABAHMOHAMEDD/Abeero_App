@@ -10,7 +10,7 @@ class CartListViewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartViewModel>(
-        init: CartViewModel(),
+        init: Get.put(CartViewModel()),
         builder: (controller) => Expanded(
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
@@ -87,7 +87,7 @@ class CartListViewView extends StatelessWidget {
                                                 KScaffoldColor.withOpacity(0.6),
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             child: Row(
                                               mainAxisAlignment:

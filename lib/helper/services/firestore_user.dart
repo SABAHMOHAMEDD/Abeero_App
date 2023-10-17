@@ -10,4 +10,8 @@ class FireStoreUser {
         .doc(userModel.userId)
         .set(userModel.toJson());
   }
+
+  Future<DocumentSnapshot> getCurrentUser(String userId) async {
+    return await _userCollectionRef.doc(userId).get();
+  }
 }

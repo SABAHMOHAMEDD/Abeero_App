@@ -27,7 +27,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 extendBody: false, //<------like this
 
                 appBar: AppBar(
-                  centerTitle: true,
+                  // centerTitle: true,
                   scrolledUnderElevation: 0,
                   automaticallyImplyLeading: false,
                   title: const Text(
@@ -176,6 +176,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
     'Home',
     'Cart',
     'Favorite',
-    'Account',
+    'Profile',
   ];
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../view/Taps/cart_screen.dart';
-import '../view/Taps/favourites_screen.dart';
+import '../view/Taps/cart_view.dart';
+import '../view/Taps/favourites_view.dart';
 import '../view/Taps/home_view.dart';
 import '../view/Taps/profile_view.dart';
 
@@ -13,7 +13,7 @@ class ControlHomeViewModel extends GetxController {
   get currentIndex => _currentIndex;
   List<Widget> bottomScreens = [
     HomeScreen(),
-    CartScreen(),
+    CartView(),
     FavouritesScreen(),
     ProfileView()
   ];

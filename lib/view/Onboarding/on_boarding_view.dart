@@ -1,6 +1,6 @@
-import 'package:abeero/core/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:get/get.dart';
 
 import '../../../core/cache_helper.dart';
 import '../../../core/constants.dart';
@@ -31,9 +31,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            const Expanded(
-                flex: 1,
-                child: SizedBox()),
+            const Expanded(flex: 1, child: SizedBox()),
             Expanded(
               flex: 6,
               child: PageView.builder(
@@ -107,7 +105,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         color: KPrimaryColor),
                     child: MaterialButton(
                       onPressed: () {
-                        navigateTo(context, const ControlView());
+                        Get.offAll(const ControlView());
                       },
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +134,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   void onSubmit() {
     CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
       if (value == true) {
-        navigateTo(context, SignInView());
+        Get.offAll(SignInView());
       }
     });
   }
