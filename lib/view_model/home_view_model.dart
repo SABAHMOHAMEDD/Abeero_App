@@ -1,4 +1,5 @@
 import 'package:abeero/model/product_model.dart';
+import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -6,13 +7,17 @@ import '../helper/services/firestore_home.dart';
 import '../model/category_model.dart';
 
 class HomeViewModel extends GetxController {
-  ValueNotifier<bool> _isLoading = ValueNotifier(false);
+
+
+  final ProfileViewModel profileViewModel = Get.find();
+
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
   ValueNotifier<bool> get isLoading => _isLoading;
 
-  List<CategoryModel> _categoryModel = [];
+  final List<CategoryModel> _categoryModel = [];
   List<CategoryModel> get categoryModel => _categoryModel;
 
-  List<ProductModel> _productModel = [];
+  final List<ProductModel> _productModel = [];
   List<ProductModel> get productModel => _productModel;
 
   HomeViewModel() {
@@ -42,5 +47,9 @@ class HomeViewModel extends GetxController {
       }
       update();
     });
+  }
+
+  void getUserData() async {
+    await profileViewModel.getUserData();
   }
 }

@@ -17,8 +17,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Get.put(CartViewModel());
-  // Get.put(LocalStorageData());
-  // Get.put(ProfileViewModel());
+  Get.put(LocalStorageData());
+  //Get.put(ProfileViewModel());
 
   runApp(const MyApp());
 }

@@ -15,11 +15,7 @@ class ProfileView extends StatelessWidget {
     return GetBuilder<ProfileViewModel>(
       init: ProfileViewModel(),
       builder: (controller) => controller.isLoading.value
-          ? const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+          ? const Scaffold(body: SizedBox())
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -27,21 +23,22 @@ class ProfileView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 58,
                         backgroundColor: KScaffoldColor,
-                        backgroundImage: controller.userModel.userImage == null
-                            ? const AssetImage("assets/images/user.png")
-                            : controller.userModel.userImage == "default"
-                                ? const AssetImage("assets/images/user.png")
-                                : NetworkImage(controller.userModel.userImage!)
-                                    as ImageProvider,
+                        backgroundImage: AssetImage("assets/images/user.png"),
+                        // backgroundImage: controller.userModel.userImage==null
+                        //     ? const AssetImage("assets/images/user.png")
+                        //     : controller.userModel.userImage == "default"
+                        //         ? const AssetImage("assets/images/user.png")
+                        //         : NetworkImage(controller.userModel.userImage!)
+                        //             as ImageProvider,
                       ),
                       const SizedBox(
                         width: 25,
@@ -52,11 +49,11 @@ class ProfileView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.userModel.name ?? "",
+                              controller.userModel?.name ?? "",
                               style: const TextStyle(fontSize: 26),
                             ),
                             Text(
-                              controller.userModel.email ?? "",
+                              controller.userModel?.email ?? "",
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],
@@ -65,7 +62,7 @@ class ProfileView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 80,
+                    height: 40,
                   ),
                   const ListTileItem(
                     title: 'Edit Profile',
@@ -84,24 +81,34 @@ class ProfileView extends StatelessWidget {
                     leadingIcon: IconBroken.Notification,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        controller.signOut();
-                        Get.offAll(SignInView());
-                      },
-                      child: const ListTile(
-                        title: Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            'Log Out',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        leading: Icon(
-                          IconBroken.Logout,
-                          size: 28,
-                          color: KPrimaryColor,
-                        ),
-                      ))
+                    onTap: () {
+                      controller.signOut();
+                      Get.offAll(SignInView());
+                    },
+                    child: const ListTileItem(
+                      title: 'Log Out',
+                      leadingIcon: IconBroken.Logout,
+                    ),
+                  ),
+                  // GestureDetector(
+                  //     onTap: () {
+                  //       controller.signOut();
+                  //       Get.offAll(SignInView());
+                  //     },
+                  //     child: const ListTile(
+                  //       title: Padding(
+                  //         padding: EdgeInsets.only(left: 8.0),
+                  //         child: Text(
+                  //           'Log Out',
+                  //           style: TextStyle(fontSize: 18),
+                  //         ),
+                  //       ),
+                  //       leading: Icon(
+                  //         IconBroken.Logout,
+                  //         size: 28,
+                  //         color: KPrimaryColor,
+                  //       ),
+                  //     ))
                 ],
               ),
             ),

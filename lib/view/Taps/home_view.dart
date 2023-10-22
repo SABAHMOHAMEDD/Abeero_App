@@ -8,7 +8,16 @@ import '../../core/constants.dart';
 import '../../view_model/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
-  List<String> catTitle = ['Men', 'Women', 'Hats', 'Bags', 'Scarfs', 'Tops'];
+  HomeScreen({super.key});
+  final List<String> catTitle = [
+    'Men',
+    'Women',
+    'Hats',
+    'Bags',
+    'Scarfs',
+    'Tops'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

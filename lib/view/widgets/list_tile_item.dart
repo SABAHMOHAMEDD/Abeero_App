@@ -30,7 +30,7 @@ class ListTileItem extends StatelessWidget {
         ),
         trailing: const Icon(
           IconBroken.Arrow___Right_2,
-          size: 26,
+          size: 24,
           color: Colors.grey,
         ),
       ),

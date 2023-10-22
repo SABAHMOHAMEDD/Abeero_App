@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:abeero/model/user_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,9 @@ class LocalStorageData extends GetxController {
 
       return userModel;
     } catch (error) {
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       return null;
     }
   }
@@ -32,6 +35,9 @@ class LocalStorageData extends GetxController {
 
   void deleteUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
+    await preferences.clear().then((value) {
+      print("Clearing the cache>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      print(value);
+    });
   }
 }

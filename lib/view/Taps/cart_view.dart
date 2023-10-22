@@ -1,3 +1,4 @@
+import 'package:abeero/view/checkout/checkout_view.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class CartView extends StatelessWidget {
                     body: Column(
                       children: [
                         const SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         const CartListViewView(),
                         Padding(
@@ -77,7 +78,9 @@ class CartView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15),
                                     color: KPrimaryColor.withOpacity(0.74)),
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.to(CheckoutView());
+                                  },
                                   child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

@@ -12,7 +12,6 @@ import '../helper/services/firestore_user.dart';
 import '../view/layout_view.dart';
 
 class AuthViewModel extends GetxController {
-  // final LocalStorageData localStorageData = Get.put(LocalStorageData());
   final LocalStorageData localStorageData = Get.find();
   final ProfileViewModel profileViewModel = Get.find();
 
@@ -30,6 +29,10 @@ class AuthViewModel extends GetxController {
   void onInit() {
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    final currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      getCurrentUserData(currentUser.uid);
+    }
   }
 
   void googleSignInMethod() async {
@@ -65,15 +68,7 @@ class AuthViewModel extends GetxController {
       await _auth
           .signInWithEmailAndPassword(email: email!, password: password!)
           .then((value) async {
-        // await FireStoreUser().getCurrentUser(value.user!.uid).then((value) {
-        //   print("++++++++++++++++++++++++");
-        //   print(value);
-        //   print(value.data());
-        //   print("++++++++++++++++++++++++");
-        //
-        //   // setUserData(UserModel.fromJson(value.data() as Map<String, dynamic>));
-        // });
-
+        getCurrentUserData(value.user!.uid);
         _isLoading.value = false;
 
         print(value);
@@ -110,6 +105,16 @@ class AuthViewModel extends GetxController {
     }
   }
 
+  void getCurrentUserData(String uid) async {
+    await FireStoreUser().getCurrentUser(uid).then((value) {
+      print("++++++++++++++++++++++++");
+      print(value.data());
+      print("++++++++++++++++++++++++");
+
+      setUserData(UserModel.fromJson(value.data() as Map<String, dynamic>));
+    });
+  }
+
   // save data in firestore//
   void saveUserData(UserCredential user) async {
     UserModel userModel = UserModel(
@@ -119,11 +124,21 @@ class AuthViewModel extends GetxController {
         email: user.user?.email);
 
     await FireStoreUser().addUserToFireStore(userModel);
+    print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
     setUserData(userModel);
+    print(userModel.name);
   }
 
   // save data in shared prefs//
   void setUserData(UserModel userModel) async {
     await localStorageData.setUserData(userModel);
+    print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+    print(userModel.name);
+    getUserData();
+  }
+
+  void getUserData() async {
+    await profileViewModel.getUserData();
   }
 }
