@@ -7,8 +7,8 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../core/helper/services/firestore_user.dart';
 import '../core/local_storage_data.dart';
-import '../helper/services/firestore_user.dart';
 import '../view/layout_view.dart';
 
 class AuthViewModel extends GetxController {

@@ -3,7 +3,7 @@ import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../helper/services/firestore_home.dart';
+import '../core/helper/services/firestore_home.dart';
 import '../model/category_model.dart';
 
 class HomeViewModel extends GetxController {

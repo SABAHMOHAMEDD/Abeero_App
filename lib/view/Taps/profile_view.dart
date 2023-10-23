@@ -4,8 +4,8 @@ import 'package:abeero/view/Auth/SignIn_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../core/widgets/list_tile_item.dart';
 import '../../view_model/profile_view_model.dart';
-import '../widgets/list_tile_item.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({super.key});

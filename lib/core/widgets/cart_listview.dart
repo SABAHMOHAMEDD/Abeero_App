@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../core/constants.dart';
 import '../../view_model/cart_view_model.dart';
 
-class CartListViewView extends StatelessWidget {
-  const CartListViewView({super.key});
+class CartListview extends StatelessWidget {
+  const CartListview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class CartListViewView extends StatelessWidget {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14,
-                                        color: TextColorBlack),
+                                        color: KTextColorBlack),
                                   ),
                                   const SizedBox(
                                     height: 5,

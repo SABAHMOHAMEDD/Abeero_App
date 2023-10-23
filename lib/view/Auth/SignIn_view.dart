@@ -1,6 +1,3 @@
-import 'package:abeero/view/widgets/custom_button.dart';
-import 'package:abeero/view/widgets/custom_socail_button.dart';
-import 'package:abeero/view/widgets/custom_text_field.dart';
 import 'package:abeero/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +5,9 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../core/constants.dart';
 
+import '../../core/widgets/custom_button.dart';
+import '../../core/widgets/custom_socail_button.dart';
+import '../../core/widgets/custom_text_field.dart';
 import 'signUp_view.dart';
 
 class SignInView extends GetWidget<AuthViewModel> {
@@ -105,14 +105,12 @@ class SignInView extends GetWidget<AuthViewModel> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: CustomButton(
-                            backgroundcolor: KPrimaryColor,
                             buttonText: 'Sign In',
-                            textColor: Colors.white,
-                            onTap: () async {
+                            onPressed: () async {
                               if (formKey.currentState!.validate()) {
                                 controller.signInWithEmailAndPassword();
                               } else {}
-                            },
+                            }, backgroundColor: KPrimaryColor.withOpacity(0.74), textColor: Colors.white,
                           ),
                         ),
                         const SizedBox(

@@ -49,17 +49,22 @@ class DetailsView extends StatelessWidget {
                   child: Padding(
                     padding:
                         const EdgeInsets.only(bottom: 0, top: 45, left: 30),
-                    child: Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white.withOpacity(.5)),
-                        child: const Icon(
-                          IconBroken.Arrow___Left,
-                          size: 24,
-                          color: KPrimaryColor,
-                        )),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white.withOpacity(.5)),
+                          child: const Icon(
+                            IconBroken.Arrow___Left,
+                            size: 24,
+                            color: KPrimaryColor,
+                          )),
+                    ),
                   ),
                 ),
               ],

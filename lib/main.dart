@@ -1,5 +1,6 @@
 import 'package:abeero/core/binding.dart';
 import 'package:abeero/core/constants.dart';
+import 'package:abeero/text_recognition.dart';
 import 'package:abeero/view/Splash/splash_view.dart';
 import 'package:abeero/view/control_view.dart';
 import 'package:abeero/view_model/cart_view_model.dart';
@@ -7,6 +8,7 @@ import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'core/local_storage_data.dart';
 import 'firebase_options.dart';
@@ -30,16 +32,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: Binding(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-        fontFamily: 'jannah',
-        colorScheme: ColorScheme.fromSeed(seedColor: KPrimaryColor),
-        useMaterial3: true,
-      ),
-      home: const ControlView(),
-    );
+        initialBinding: Binding(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+          fontFamily: 'jannah',
+          colorScheme: ColorScheme.fromSeed(seedColor: KPrimaryColor),
+          useMaterial3: true,
+        ),
+        home: const ControlView());
   }
 }

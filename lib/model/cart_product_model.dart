@@ -1,23 +1,24 @@
 class CartProductModel {
   String? name;
   String? productImage;
-  int? quantity;
+  int? _quantity; // Private variable to store the quantity value
   String? price;
   String? productId;
 
-  CartProductModel(
-      {required this.name,
-      required this.productImage,
-      required this.quantity,
-      required this.price,
-      required this.productId});
+  CartProductModel({
+    required this.name,
+    required this.productImage,
+    required this.price,
+    required int quantity, // Updated parameter name
+    required this.productId,
+  }) : _quantity = quantity; // Assign the value to the private variable
 
   CartProductModel.fromJson(Map<dynamic, dynamic> json)
       : this(
           name: json['name'],
           productImage: json['productImage'],
-          quantity: json['quantity'],
           price: json['price'],
+          quantity: json['quantity'],
           productId: json['productId'],
         );
 
@@ -25,9 +26,20 @@ class CartProductModel {
     return {
       'name': name,
       'productImage': productImage,
-      'quantity': quantity,
+      'quantity': quantity, // Use the getter method here
       'price': price,
       'productId': productId,
     };
+  }
+
+  int get quantity {
+    return _quantity ??
+        1; // Return the private variable with a default value of 0
+  }
+
+  set quantity(int newQuantity) {
+    if (newQuantity >= 1) {
+      _quantity = newQuantity;
+    }
   }
 }

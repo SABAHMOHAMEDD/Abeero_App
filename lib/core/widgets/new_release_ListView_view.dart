@@ -1,11 +1,11 @@
 import 'package:abeero/view/details_view.dart';
-import 'package:abeero/view/widgets/animated_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../core/constants.dart';
 import '../../view_model/home_view_model.dart';
+import 'animated_loading.dart';
 
 class NewReleaseListviewView extends StatelessWidget {
   const NewReleaseListviewView({super.key, required this.catTitle});
@@ -36,7 +36,7 @@ class NewReleaseListviewView extends StatelessWidget {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
+                            color: Colors.grey.shade50,
                             //color: KScaffoldColor.withOpacity(.4),
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
@@ -69,7 +69,7 @@ class NewReleaseListviewView extends StatelessWidget {
                                             .productModel[index].description ??
                                         "",
                                     style: const TextStyle(
-                                      color: TextColorBlack,
+                                      color: KTextColorBlack,
                                       fontSize: 12,
                                     ),
                                     maxLines: 1,

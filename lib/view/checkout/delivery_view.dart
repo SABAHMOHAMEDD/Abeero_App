@@ -18,7 +18,7 @@ class _DeliveryViewState extends State<DeliveryView> {
     return Column(
       children: [
         const SizedBox(
-          height: 70,
+          height: 35,
         ),
         RadioListTile<Delivery>(
           activeColor: KPrimaryColor,
@@ -38,7 +38,7 @@ class _DeliveryViewState extends State<DeliveryView> {
           ),
           subtitle: const Text(
             '\nOrder will be delivered between 3 - 5 business days',
-            style: TextStyle(color: TextColorBlack),
+            style: TextStyle(color: KTextColorBlack),
           ),
         ),
         const SizedBox(
@@ -57,7 +57,7 @@ class _DeliveryViewState extends State<DeliveryView> {
               const Text("Next Day Delivery", style: TextStyle(fontSize: 18)),
           subtitle: const Text(
             '\nPlace your order before 6pm and your items will be delivered the next day',
-            style: TextStyle(color: TextColorBlack),
+            style: TextStyle(color: KTextColorBlack),
           ),
           activeColor: KPrimaryColor,
           autofocus: true,
@@ -81,7 +81,7 @@ class _DeliveryViewState extends State<DeliveryView> {
               const Text("Nominated Delivery", style: TextStyle(fontSize: 18)),
           subtitle: const Text(
             '\nPick a particular date from the calendar and order will be delivered on selected date',
-            style: TextStyle(color: TextColorBlack),
+            style: TextStyle(color: KTextColorBlack),
           ),
           activeColor: KPrimaryColor,
           autofocus: true,

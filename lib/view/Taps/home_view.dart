@@ -1,10 +1,10 @@
-import 'package:abeero/view/widgets/category_listview_view.dart';
-import 'package:abeero/view/widgets/new_release_ListView_view.dart';
-import 'package:abeero/view/widgets/search_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants.dart';
+import '../../core/widgets/category_listview_view.dart';
+import '../../core/widgets/new_release_ListView_view.dart';
+import '../../core/widgets/search_bar_view.dart';
 import '../../view_model/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -97,7 +97,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.only(right: 20),
                     child: Text(
                       'See all',
-                      style: TextStyle(color: TextColorBlack),
+                      style: TextStyle(color: KTextColorBlack),
                     ),
                   )
                 ],

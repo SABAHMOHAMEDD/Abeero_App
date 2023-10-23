@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants.dart';
+import '../../core/widgets/cart_listview.dart';
 import '../../view_model/cart_view_model.dart';
 import '../empty_cart_view.dart';
-import '../widgets/cart_item_view.dart';
 
 class CartView extends StatelessWidget {
   @override
@@ -23,7 +23,7 @@ class CartView extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        const CartListViewView(),
+                        const CartListview(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 10),
@@ -36,39 +36,42 @@ class CartView extends StatelessWidget {
                                   child: GetBuilder<CartViewModel>(
                                     init: Get.find(),
                                     builder: (controller) => Center(
-                                        child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                          'Total Price',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Text(
-                                              '\$',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: KPrimaryColor),
-                                            ),
-                                            Text(
-                                              controller.totalPrice.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black
-                                                      .withOpacity(0.8)),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                        child: FittedBox(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Total Price',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Text(
+                                                '\$',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: KPrimaryColor),
+                                              ),
+                                              Text(
+                                                controller.totalPrice
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black
+                                                        .withOpacity(0.8)),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     )),
                                   )),
                               Container(

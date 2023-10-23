@@ -34,7 +34,7 @@ class SearchBarView extends StatelessWidget {
               onChanged: (value) {},
               decoration: const InputDecoration(
                   hintText: 'Search',
-                  hintStyle: TextStyle(color: TextColorBlack),
+                  hintStyle: TextStyle(color: KTextColorBlack),
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none),
             ),

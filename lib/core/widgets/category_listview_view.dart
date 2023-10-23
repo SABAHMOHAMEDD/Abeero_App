@@ -54,7 +54,7 @@ class CategoryListviewView extends StatelessWidget {
                               controller.categoryModel[index].name ?? "",
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  color: TextColorBlack,
+                                  color: KTextColorBlack,
                                   fontSize: 14),
                             ),
                           ],
