@@ -24,6 +24,7 @@ class CheckoutViewModel extends GetxController {
       selectedPagexNumber.value = 1;
       activeStep.value = index;
     } else if (index == 2) {
+      formKey.currentState?.save();
       if (formKey.currentState!.validate()) {
         selectedPagexNumber.value = 2;
         activeStep.value = index;
