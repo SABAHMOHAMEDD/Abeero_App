@@ -46,9 +46,8 @@ dependencies:
   path: ^1.8.3
   easy_stepper: ^0.8.1
   horizontal_blocked_scroll_physics: ^4.0.1
-  flutter_tesseract_ocr: ^0.4.24
-  learning_text_recognition:
-  provider: ^6.0.5
+  cached_network_image: ^3.3.0
+
 
 
 

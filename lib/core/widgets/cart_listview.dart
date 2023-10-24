@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,20 +26,14 @@ class CartListview extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Row(
                         children: [
-                          SizedBox(
+                          CachedNetworkImage(
                             width: 140,
-                            child: Container(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Image(
-                                  width: 140,
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(controller
-                                          .cartProductModel[index]
-                                          .productImage ??
-                                      "")),
-                            ),
+                            fit: BoxFit.cover,
+                            imageUrl: controller
+                                    .cartProductModel[index].productImage ??
+                                "",
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                           const SizedBox(
                             width: 10,

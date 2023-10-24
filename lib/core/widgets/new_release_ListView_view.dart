@@ -1,4 +1,5 @@
 import 'package:abeero/view/details_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -41,11 +42,15 @@ class NewReleaseListviewView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
-                            Image.network(
-                              controller.productModel[index].productImage ?? "",
+                            CachedNetworkImage(
                               height: 170,
                               width: double.infinity,
                               fit: BoxFit.cover,
+                              imageUrl:
+                                  controller.productModel[index].productImage ??
+                                      "",
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
                             const SizedBox(
                               height: 10,

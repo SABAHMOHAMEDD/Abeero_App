@@ -1,5 +1,6 @@
 import 'package:abeero/model/cart_product_model.dart';
 import 'package:abeero/model/product_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,17 +21,18 @@ class DetailsView extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.network(
-                  productModel.productImage ?? "",
+                CachedNetworkImage(
                   height: 290,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  imageUrl: productModel.productImage ?? "",
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
                 Align(
                   alignment: AlignmentDirectional.topEnd,
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(bottom: 0, top: 45, right: 30),
+                        const EdgeInsets.only(bottom: 0, top: 45, right: 22),
                     child: Container(
                         height: 45,
                         width: 45,
@@ -48,7 +50,7 @@ class DetailsView extends StatelessWidget {
                   alignment: AlignmentDirectional.topStart,
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(bottom: 0, top: 45, left: 30),
+                        const EdgeInsets.only(bottom: 0, top: 45, left: 22),
                     child: GestureDetector(
                       onTap: () {
                         Get.back();
@@ -254,7 +256,7 @@ class DetailsView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       )
                     ],
                   ),

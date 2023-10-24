@@ -7,14 +7,29 @@ class SummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 35,
           ),
-          SummaryListview(),
-          Expanded(child: Text('KKKKKKKKKKKKKKKKK'))
+          const SummaryListview(),
+          Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Text(
+                    'Shipping Address',
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                  ),
+                  Text(
+                    'Shipping Address',
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                  ),
+                ],
+              ))
         ],
       ),
     );

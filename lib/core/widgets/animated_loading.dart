@@ -12,7 +12,7 @@ class AnimatedLoading extends StatelessWidget {
 
     return Center(
         child: LoadingAnimationWidget.inkDrop(
-      color: KPrimaryColor.withOpacity(.8),
+      color: KPrimaryColor.withOpacity(.5),
       size: screenSize.width / 12,
     ));
   }

@@ -29,10 +29,11 @@ class ProfileView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 58,
-                        backgroundColor: KScaffoldColor,
-                        backgroundImage: AssetImage("assets/images/user.png"),
+                        backgroundColor: KScaffoldColor.withOpacity(.5),
+                        backgroundImage:
+                            const AssetImage("assets/images/user.png"),
                         // backgroundImage: controller.userModel.userImage==null
                         //     ? const AssetImage("assets/images/user.png")
                         //     : controller.userModel.userImage == "default"

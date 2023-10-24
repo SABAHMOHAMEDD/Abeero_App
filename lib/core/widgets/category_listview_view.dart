@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,12 +41,18 @@ class CategoryListviewView extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CircleAvatar(
-                              backgroundColor: KScaffoldColor,
-                              radius: 28,
-                              backgroundImage: NetworkImage(controller
+                            CachedNetworkImage(
+                              imageUrl: controller
                                       .categoryModel[index].categoryImage ??
-                                  "https://firebasestorage.googleapis.com/v0/b/abeero-cd57f.appspot.com/o/e608c6be18ca364c75444c61430f81a2.jpg?alt=media&token=fd746e64-4de6-4aed-9754-d150b176d973&_gl=1*ft41x2*_ga*MTExNDk2NTUwNi4xNjkxNjgwNDI2*_ga_CW55HF8NVT*MTY5NzEwMDI4MS44OC4xLjE2OTcxMDA3MjYuMzUuMC4w"),
+                                  "",
+                              imageBuilder: (context, imageProvider) =>
+                                  CircleAvatar(
+                                backgroundColor: KScaffoldColor.withOpacity(.5),
+                                radius: 28,
+                                backgroundImage: imageProvider,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
                             const SizedBox(
                               height: 10,

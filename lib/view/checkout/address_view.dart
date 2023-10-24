@@ -31,10 +31,8 @@ class AddressView extends StatelessWidget {
                     controller.street1 = value;
                   },
                   validator: (value) {
-                    if (value!.isNotEmpty) {
-                      return;
-                    } else {
-                      'you should enter your street 1';
+                    if (value!.isEmpty) {
+                      return "Please Enter Street 1";
                     }
                   },
                 ),
@@ -48,10 +46,8 @@ class AddressView extends StatelessWidget {
                     controller.street2 = value;
                   },
                   validator: (value) {
-                    if (value!.isNotEmpty) {
-                      return;
-                    } else {
-                      'you should enter your street 2';
+                    if (value!.isEmpty) {
+                      return "Please Enter Street 2";
                     }
                   },
                 ),
@@ -65,10 +61,8 @@ class AddressView extends StatelessWidget {
                     controller.city = value;
                   },
                   validator: (value) {
-                    if (value!.isNotEmpty) {
-                      return;
-                    } else {
-                      'you should enter your City';
+                    if (value!.isEmpty) {
+                      return "Please Enter City";
                     }
                   },
                 ),
@@ -87,10 +81,8 @@ class AddressView extends StatelessWidget {
                           controller.state = value;
                         },
                         validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return;
-                          } else {
-                            'you should enter your State';
+                          if (value!.isEmpty) {
+                            return "Please Enter State";
                           }
                         },
                       ),
@@ -103,6 +95,11 @@ class AddressView extends StatelessWidget {
                         hint: 'Nigeria',
                         onSave: (value) {
                           controller.country = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Country";
+                          }
                         },
                       ),
                     ))

@@ -153,16 +153,20 @@ class CheckoutView extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: PageView(
-                    controller: controller.pageController,
-                    onPageChanged: controller.changeStepperAndPageviewIndex,
-                    children: controller.pages,
-                  ),
-                ),
+                    child: Container(
+                  child: controller.pages[controller.selectedPagexNumber.value],
+                )),
+                // Expanded(
+                //   child: PageView(
+                //     controller: controller.pageController,
+                //     onPageChanged: controller.changeStepperAndPageviewIndex,
+                //     children: controller.pages,
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(children: [
-                    controller.activeStep.value == 0
+                    controller.selectedPagexNumber.value == 0
                         ? const Expanded(child: SizedBox())
                         : Expanded(
                             flex: 1,

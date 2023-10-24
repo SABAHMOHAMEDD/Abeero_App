@@ -7,7 +7,7 @@ class CustomTextFormField1 extends StatelessWidget {
   final String? hint;
 
   final void Function(String?)? onSave;
-  final String? Function(String?)?  validator;
+  final String? Function(String?)? validator;
 
   const CustomTextFormField1({
     super.key,
@@ -47,7 +47,7 @@ class CustomTextFormField1 extends StatelessWidget {
                 borderSide:
                     BorderSide(color: KPrimaryColor.withOpacity(.7), width: 1)),
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey.shade900, fontSize: 15),
+            hintStyle: TextStyle(color: Colors.grey.shade700, fontSize: 15),
             fillColor: Colors.white,
           ),
         )
