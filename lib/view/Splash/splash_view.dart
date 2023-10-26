@@ -2,7 +2,6 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
-import '../control_view.dart';
 import '../Onboarding/on_boarding_view.dart';
 
 class SplashScreen extends StatelessWidget {

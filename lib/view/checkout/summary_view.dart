@@ -46,7 +46,7 @@ class SummaryView extends StatelessWidget {
                                 fontSize: 16, color: Colors.grey.shade700),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         const Icon(
                           Icons.radio_button_checked_sharp,
                           color: KPrimaryColor,
@@ -54,7 +54,7 @@ class SummaryView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(

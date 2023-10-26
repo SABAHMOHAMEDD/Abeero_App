@@ -28,7 +28,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
             ),
             inAsyncCall: controller.isLoading.value,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 36),
+              padding: const EdgeInsets.symmetric(horizontal: 36),
               child: SingleChildScrollView(
                 child: Form(
                   key: formKey,
@@ -67,7 +67,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
                           CustomTextFormField(
                             hintText: "Name",
                             hintTextColor: Colors.black54,
-                            onchanged: (data) {
+                            onChanged: (data) {
                               controller.name = data;
                             },
                             validator: (data) {
@@ -82,7 +82,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
                           CustomTextFormField(
                             hintText: "Email",
                             hintTextColor: Colors.black54,
-                            onchanged: (data) {
+                            onChanged: (data) {
                               controller.email = data;
                             },
                             validator: (data) {
@@ -103,7 +103,7 @@ class SignUpView extends GetWidget<AuthViewModel> {
                             },
                             hintText: "Password",
                             hintTextColor: Colors.black54,
-                            onchanged: (data) {
+                            onChanged: (data) {
                               controller.password = data;
                             },
                           ),

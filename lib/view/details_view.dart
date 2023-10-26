@@ -1,4 +1,5 @@
-import 'package:abeero/model/cart_product_model.dart';
+import 'package:abeero/model/cart_model.dart';
+import 'package:abeero/model/favourite_model.dart';
 import 'package:abeero/model/product_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -7,7 +8,9 @@ import 'package:get/get.dart';
 
 import '../core/IconBroken.dart';
 import '../core/constants.dart';
+import '../core/widgets/fav_icon_widget.dart';
 import '../view_model/cart_view_model.dart';
+import '../view_model/fav_view_model.dart';
 
 class DetailsView extends StatelessWidget {
   const DetailsView({super.key, required this.productModel});
@@ -28,22 +31,34 @@ class DetailsView extends StatelessWidget {
                   imageUrl: productModel.productImage ?? "",
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(bottom: 0, top: 45, right: 22),
-                    child: Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white.withOpacity(.5)),
-                        child: const Icon(
-                          IconBroken.Heart,
-                          size: 24,
-                          color: KPrimaryColor,
-                        )),
+                GetBuilder<FavViewModel>(
+                  init: FavViewModel(),
+                  builder: (controller) => Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(bottom: 0, top: 45, right: 22),
+                      child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white.withOpacity(.5)),
+                          child: IconButton(
+                            onPressed: () {
+                              print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                              controller.addProductToFav(FavouriteModel(
+                                  name: productModel.name,
+                                  productImage: productModel.productImage,
+                                  price: productModel.price,
+                                  productId: productModel.productId));
+                              print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                            },
+                            icon: FavoriteIconWidget(
+                              productId: productModel.productId ?? "",
+                            ),
+                          )),
+                    ),
                   ),
                 ),
                 Align(
@@ -218,7 +233,7 @@ class DetailsView extends StatelessWidget {
                                     color: KPrimaryColor),
                                 child: MaterialButton(
                                   onPressed: () => controller.addProductToCart(
-                                      CartProductModel(
+                                      CartModel(
                                           name: productModel.name,
                                           productImage:
                                               productModel.productImage,

@@ -7,8 +7,6 @@ import '../core/helper/services/firestore_home.dart';
 import '../model/category_model.dart';
 
 class HomeViewModel extends GetxController {
-
-
   final ProfileViewModel profileViewModel = Get.find();
 
   final ValueNotifier<bool> _isLoading = ValueNotifier(false);

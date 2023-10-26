@@ -73,7 +73,7 @@ class SignInView extends GetWidget<AuthViewModel> {
                           height: 20,
                         ),
                         CustomTextFormField(
-                            onchanged: (data) {
+                            onChanged: (data) {
                               controller.email = data;
                             },
                             hintText: "Email",
@@ -93,7 +93,7 @@ class SignInView extends GetWidget<AuthViewModel> {
                               return "please enter password";
                             }
                           },
-                          onchanged: (data) {
+                          onChanged: (data) {
                             controller.password = data;
                           },
                           hintText: "Password",

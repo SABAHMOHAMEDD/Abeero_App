@@ -1,4 +1,4 @@
-import 'package:abeero/model/cart_product_model.dart';
+import 'package:abeero/model/cart_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -7,8 +7,8 @@ import '../core/helper/database/cart_database_helper.dart';
 class CartViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   final ValueNotifier<bool> _loading = ValueNotifier(false);
-  List<CartProductModel> _cartProductModel = [];
-  List<CartProductModel> get cartProductModel => _cartProductModel;
+  List<CartModel> _cartProductModel = [];
+  List<CartModel> get cartProductModel => _cartProductModel;
   var dbHelper = CartDatabaseHelper.db;
 
   double _totalPrice = 0.0;
@@ -29,7 +29,7 @@ class CartViewModel extends GetxController {
     getTotalPrice();
   }
 
-  addProductToCart(CartProductModel cartProductModel) async {
+  addProductToCart(CartModel cartProductModel) async {
     for (int i = 0; i < _cartProductModel.length; i++) {
       if (_cartProductModel[i].productId == cartProductModel.productId) {
         return;
@@ -79,5 +79,13 @@ class CartViewModel extends GetxController {
 
       update();
     }
+  }
+
+  deleteProductFromCart(String productId, int index) async {
+    _totalPrice -= (double.parse(_cartProductModel[index].price!))*_cartProductModel[index].quantity;
+    await dbHelper.deleteProductFromCart(productId);
+    _cartProductModel.removeWhere((product) => product.productId == productId);
+
+    update();
   }
 }

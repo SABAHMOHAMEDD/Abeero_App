@@ -2,14 +2,14 @@ import 'package:abeero/core/constants.dart';
 import 'package:abeero/model/user_model.dart';
 import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../core/helper/services/firestore_user.dart';
 import '../core/local_storage_data.dart';
-import '../view/layout_view.dart';
+import '../view/layout/layout_view.dart';
 
 class AuthViewModel extends GetxController {
   final LocalStorageData localStorageData = Get.find();
@@ -45,13 +45,15 @@ class AuthViewModel extends GetxController {
 
     await _auth.signInWithCredential(credential).then((user) {
       saveUserData(user);
-      Get.offAll(LayoutScreen());
+      Get.offAll(LayoutView());
     });
   }
 
   void facebookSignInMethod() async {
     FacebookLoginResult result = await _facebookLogin.logIn();
-    print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+    if (kDebugMode) {
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+    }
 
     final accessToken = result.accessToken?.token;
 
@@ -71,13 +73,17 @@ class AuthViewModel extends GetxController {
         getCurrentUserData(value.user!.uid);
         _isLoading.value = false;
 
-        print(value);
-        Get.offAll(LayoutScreen());
+        if (kDebugMode) {
+          print(value);
+        }
+        Get.offAll(LayoutView());
       });
     } catch (error) {
       _isLoading.value = false;
 
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       Get.snackbar('Error Login account', error.toString(),
           colorText: KPrimaryColor, snackPosition: SnackPosition.BOTTOM);
     }
@@ -91,15 +97,21 @@ class AuthViewModel extends GetxController {
           .then((user) {
         _isLoading.value = false;
         saveUserData(user);
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+        if (kDebugMode) {
+          print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+        }
 
-        print(user);
-        Get.offAll(LayoutScreen());
+        if (kDebugMode) {
+          print(user);
+        }
+        Get.offAll(LayoutView());
       });
     } catch (error) {
       _isLoading.value = false;
 
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       Get.snackbar('Error create account', error.toString(),
           colorText: KPrimaryColor, snackPosition: SnackPosition.BOTTOM);
     }
@@ -107,9 +119,15 @@ class AuthViewModel extends GetxController {
 
   void getCurrentUserData(String uid) async {
     await FireStoreUser().getCurrentUser(uid).then((value) {
-      print("++++++++++++++++++++++++");
-      print(value.data());
-      print("++++++++++++++++++++++++");
+      if (kDebugMode) {
+        print("++++++++++++++++++++++++");
+      }
+      if (kDebugMode) {
+        print(value.data());
+      }
+      if (kDebugMode) {
+        print("++++++++++++++++++++++++");
+      }
 
       setUserData(UserModel.fromJson(value.data() as Map<String, dynamic>));
     });
@@ -124,17 +142,25 @@ class AuthViewModel extends GetxController {
         email: user.user?.email);
 
     await FireStoreUser().addUserToFireStore(userModel);
-    print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+    if (kDebugMode) {
+      print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
     setUserData(userModel);
-    print(userModel.name);
+    if (kDebugMode) {
+      print(userModel.name);
+    }
   }
 
   // save data in shared prefs//
   void setUserData(UserModel userModel) async {
     await localStorageData.setUserData(userModel);
-    print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+    if (kDebugMode) {
+      print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
 
-    print(userModel.name);
+    if (kDebugMode) {
+      print(userModel.name);
+    }
     getUserData();
   }
 

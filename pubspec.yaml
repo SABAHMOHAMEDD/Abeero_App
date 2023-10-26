@@ -47,6 +47,10 @@ dependencies:
   easy_stepper: ^0.8.1
   horizontal_blocked_scroll_physics: ^4.0.1
   cached_network_image: ^3.3.0
+  flutter_slidable: ^3.0.0
+  responsive_framework: ^0.2.0
+
+
 
 
 

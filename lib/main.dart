@@ -1,12 +1,16 @@
 import 'package:abeero/core/binding.dart';
 import 'package:abeero/core/constants.dart';
 import 'package:abeero/view/Splash/splash_view.dart';
-import 'package:abeero/view/control_view.dart';
+import 'package:abeero/view/layout/control_view.dart';
+import 'package:abeero/view/layout/layout_view.dart';
 import 'package:abeero/view_model/cart_view_model.dart';
+import 'package:abeero/view_model/fav_view_model.dart';
 import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/utils/scroll_behavior.dart';
 
 import 'core/local_storage_data.dart';
 import 'firebase_options.dart';
@@ -17,8 +21,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Get.put(CartViewModel());
+  Get.put(FavViewModel());
   Get.put(LocalStorageData());
-  //Get.put(ProfileViewModel());
+  Get.put(ProfileViewModel());
 
   runApp(const MyApp());
 }
@@ -26,10 +31,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        builder: (context, widget) => ResponsiveWrapper.builder(
+              BouncingScrollWrapper.builder(context, widget!),
+              maxWidth: 1200,
+              minWidth: 480,
+              defaultScale: true,
+              breakpoints: const [
+                ResponsiveBreakpoint.autoScale(480, name: 'SM'),
+                ResponsiveBreakpoint.autoScale(800, name: 'MD'),
+                ResponsiveBreakpoint.autoScale(1000, name: 'LG'),
+                ResponsiveBreakpoint.autoScale(1200, name: 'XL'),
+                ResponsiveBreakpoint.autoScale(2460, name: '2XL'),
+              ],
+            ),
         initialBinding: Binding(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -39,6 +56,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: KPrimaryColor),
           useMaterial3: true,
         ),
-        home: const ControlView());
+        home: LayoutView());
   }
 }

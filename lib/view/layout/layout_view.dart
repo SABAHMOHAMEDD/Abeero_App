@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../core/constants.dart';
-import '../view_model/control_home_view_model.dart';
+import '../../core/constants.dart';
+import '../../view_model/control_home_view_model.dart';
 
-class LayoutScreen extends StatefulWidget {
-  static const String RouteName = 'LayoutScreen';
+class LayoutView extends StatefulWidget {
+  const LayoutView({super.key});
 
   @override
-  State<LayoutScreen> createState() => _LayoutScreenState();
+  State<LayoutView> createState() => _LayoutViewState();
 }
 
-class _LayoutScreenState extends State<LayoutScreen> {
+class _LayoutViewState extends State<LayoutView> {
   var currentIndex = 0;
 
   @override

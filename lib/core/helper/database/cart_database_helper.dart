@@ -1,6 +1,5 @@
 import 'package:abeero/core/constants.dart';
-import 'package:abeero/model/cart_product_model.dart';
-import 'package:abeero/model/product_model.dart';
+import 'package:abeero/model/cart_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -32,14 +31,14 @@ class CartDatabaseHelper {
     });
   }
 
-  insert(CartProductModel cartProductModel) async {
+  insert(CartModel cartProductModel) async {
     var dbClient = await database;
 
     await dbClient?.insert(tableCartProduct, cartProductModel.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  updateProduct(CartProductModel cartProductModel) async {
+  updateProduct(CartModel cartProductModel) async {
     var dbClient = await database;
     return await dbClient?.update(tableCartProduct, cartProductModel.toJson(),
         where: '$columnProductId= ?', whereArgs: [cartProductModel.productId]);
@@ -48,9 +47,18 @@ class CartDatabaseHelper {
   getCartProducts() async {
     var dbClient = await database;
     List<Map> maps = await dbClient!.query(tableCartProduct);
-    List<CartProductModel> list = maps.isNotEmpty
-        ? maps.map((product) => CartProductModel.fromJson(product)).toList()
+    List<CartModel> list = maps.isNotEmpty
+        ? maps.map((product) => CartModel.fromJson(product)).toList()
         : [];
     return list;
+  }
+
+  deleteProductFromCart(String productId) async {
+    var dbClient = await database;
+    return await dbClient?.delete(
+      tableCartProduct,
+      where: '$columnProductId = ?',
+      whereArgs: [productId],
+    );
   }
 }

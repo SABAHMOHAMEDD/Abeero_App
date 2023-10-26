@@ -27,7 +27,7 @@ class CategoryListviewView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Get.to(CategoryScreen());
+                        Get.to(const CategoryView());
                       },
                       child: Container(
                         height: 100,

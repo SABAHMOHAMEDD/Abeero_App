@@ -2,21 +2,21 @@ import 'package:abeero/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  String? hintText;
-  bool obscureText = false;
-  Color? hintTextColor;
-  Function(String)? onchanged;
-  String? validatemsg;
-  String? Function(String?)? validator;
+  final String? hintText;
+  final bool obscureText;
+  final Color? hintTextColor;
+  final Function(String)? onChanged;
+  final String? validateMsg;
+  final String? Function(String?)? validator;
 
-  CustomTextFormField(
+  const CustomTextFormField(
       {super.key,
       this.hintText,
       this.hintTextColor,
-      this.onchanged,
+      this.onChanged,
       this.validator,
       this.obscureText = false,
-      this.validatemsg});
+      this.validateMsg});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
         obscureText: obscureText,
         validator: validator,
-        onChanged: onchanged,
+        onChanged: onChanged,
         style: const TextStyle(
             color: Colors.black54, decoration: TextDecoration.none),
         cursorColor: KPrimaryColor,

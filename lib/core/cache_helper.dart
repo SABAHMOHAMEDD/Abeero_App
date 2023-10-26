@@ -18,8 +18,9 @@ class CacheHelper {
     return await sharedPreferences!.setDouble(key, value);
   }
 
-  static dynamic getData({ //get the saved data to use them any place
-    required String key}) {
+  static dynamic getData(
+      { //get the saved data to use them any place
+      required String key}) {
     return sharedPreferences?.get(key);
   }
 

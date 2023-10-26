@@ -13,7 +13,7 @@ class ControlView extends GetWidget<AuthViewModel> {
     return Obx(() {
       return (Get.find<AuthViewModel>().user == null)
           ? SignInView()
-          : LayoutScreen();
+          : LayoutView();
     });
   }
 }

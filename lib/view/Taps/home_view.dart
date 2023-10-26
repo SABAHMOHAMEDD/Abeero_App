@@ -30,24 +30,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // const Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Padding(
-              //       padding: EdgeInsets.only(left: 15),
-              //       child: Text(
-              //         'Choose \n  Your Art..',
-              //         style: TextStyle(
-              //             fontSize: 28,
-              //             fontWeight: FontWeight.w800,
-              //             color: KPrimaryColor),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+
               const SizedBox(
                 height: 10,
               ),
