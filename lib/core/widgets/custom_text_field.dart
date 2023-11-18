@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final bool obscureText;
+  final Widget? suffixIcon;
   final Color? hintTextColor;
   final Function(String)? onChanged;
   final String? validateMsg;
@@ -16,20 +17,27 @@ class CustomTextFormField extends StatelessWidget {
       this.onChanged,
       this.validator,
       this.obscureText = false,
-      this.validateMsg});
+      this.validateMsg,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: 68,
       child: TextFormField(
         obscureText: obscureText,
         validator: validator,
         onChanged: onChanged,
         style: const TextStyle(
-            color: Colors.black54, decoration: TextDecoration.none),
+            color: Colors.black54,
+            decoration: TextDecoration.none,
+            fontSize: 18),
         cursorColor: KPrimaryColor,
         decoration: InputDecoration(
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: suffixIcon,
+            ),
             hintText: hintText,
             hintStyle: TextStyle(color: hintTextColor),
             focusedBorder: OutlineInputBorder(

@@ -8,8 +8,9 @@ import '../../view_model/home_view_model.dart';
 import 'animated_loading.dart';
 
 class NewReleaseListviewView extends StatelessWidget {
-  const NewReleaseListviewView({super.key, required this.catTitle});
-  final List<String> catTitle;
+  const NewReleaseListviewView({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -17,11 +18,11 @@ class NewReleaseListviewView extends StatelessWidget {
     return GetBuilder<HomeViewModel>(
       init: HomeViewModel(),
       builder: (controller) => controller.isLoading.value
-          ? const Center(child: AnimatedLoading())
+          ? const AnimatedLoading()
           : Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Container(
-                height: screenSize.height / 2,
+              child: SizedBox(
+                height: screenSize.height * .60,
                 child: GridView.builder(
                   itemCount: controller.productModel.length,
                   physics: const BouncingScrollPhysics(),
@@ -29,8 +30,10 @@ class NewReleaseListviewView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.to(DetailsView(
-                            productModel: controller.productModel[index]));
+                        Get.to(
+                            DetailsView(
+                                productModel: controller.productModel[index]),
+                            transition: Transition.fadeIn);
                       },
                       child: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -48,8 +51,10 @@ class NewReleaseListviewView extends StatelessWidget {
                               imageUrl:
                                   controller.productModel[index].productImage ??
                                       "",
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                color: KPrimaryColor.withOpacity(.5),
+                              ),
                             ),
                             const SizedBox(
                               height: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../view/checkout/address_view.dart';
@@ -32,9 +33,10 @@ class CheckoutViewModel extends GetxController {
     }
     // change stepper index
 
-    print('stepper index :<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>');
-
-    print(activeStep);
+    if (kDebugMode) {
+      print('stepper index :<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>');
+      print(activeStep);
+    }
   }
 
   // for next button

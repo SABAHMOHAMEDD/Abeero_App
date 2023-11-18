@@ -13,9 +13,9 @@ class EmptyFavView extends StatelessWidget {
         children: [
           Lottie.asset(
             'assets/images/emptyfavlistimage.json',
-            width: 300,
-            height: 300,
-            fit: BoxFit.fill,
+            width: double.infinity,
+            height: 400,
+            fit: BoxFit.contain,
           ),
           const SizedBox(
             height: 25,

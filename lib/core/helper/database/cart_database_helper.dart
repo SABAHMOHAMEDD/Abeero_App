@@ -61,4 +61,46 @@ class CartDatabaseHelper {
       whereArgs: [productId],
     );
   }
+
+  static void closeDatabase() async {
+    if (_database != null) {
+      await _database!.close();
+      _database = null;
+    }
+  }
+
+  // static Future<void> clearCartDatabase() async {
+  //   var dbClient = await CartDatabaseHelper.db.database;
+  //   if (dbClient != null) {
+  //print('Before deletion: ${await dbClient.query(tableCartProduct)}');
+
+  //     await dbClient.delete(tableCartProduct);
+  //     await dbClient.close();
+  //     _database = null;
+  // print('After deletion: ${await dbClient.query(tableCartProduct)}');
+
+  //   }
+  // }
+
+  Future<bool> isCartDatabaseEmpty() async {
+    var dbClient = await CartDatabaseHelper.db.database;
+    if (dbClient != null) {
+      var count = Sqflite.firstIntValue(
+          await dbClient.rawQuery('SELECT COUNT(*) FROM $tableCartProduct'));
+      return count == 0;
+    }
+    return true;
+  }
+
+  static Future<void> clearCartDatabase() async {
+    var dbClient = await CartDatabaseHelper.db.database;
+    if (dbClient != null) {
+      print('Before deletion: ${await dbClient.query(tableCartProduct)}');
+      await dbClient.delete(tableCartProduct);
+      print('After deletion: ${await dbClient.query(tableCartProduct)}');
+
+      await dbClient.close();
+      _database = null;
+    }
+  }
 }

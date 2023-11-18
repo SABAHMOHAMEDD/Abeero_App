@@ -3,7 +3,6 @@ import 'package:abeero/model/user_model.dart';
 import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -15,16 +14,20 @@ class AuthViewModel extends GetxController {
   final LocalStorageData localStorageData = Get.find();
   final ProfileViewModel profileViewModel = Get.find();
 
-  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
-  ValueNotifier<bool> get isLoading => _isLoading;
-
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FacebookLogin _facebookLogin = FacebookLogin(debug: true);
+  // final FacebookLogin _facebookLogin = FacebookLogin(debug: true);
   String? email, password, name;
 
   final Rxn<User> _user = Rxn<User>();
   String? get user => _user.value?.email;
+
+  var isLoading = false.obs;
+  var isHidden = true.obs;
+
+  void togglePasswordVisibility() {
+    isHidden.value = !isHidden.value;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -36,50 +39,92 @@ class AuthViewModel extends GetxController {
   }
 
   void googleSignInMethod() async {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    name = null;
+    isLoading(true);
+    final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+    if (googleUser == null) {
+      // User canceled sign-in
+      isLoading(false);
+      return;
+    }
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
     final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
-    await _auth.signInWithCredential(credential).then((user) {
-      saveUserData(user);
-      Get.offAll(LayoutView());
-    });
-  }
-
-  void facebookSignInMethod() async {
-    FacebookLoginResult result = await _facebookLogin.logIn();
-    if (kDebugMode) {
-      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-    }
-
-    final accessToken = result.accessToken?.token;
-
-    if (result.status == FacebookLoginStatus.success) {
-      final faceCredential = FacebookAuthProvider.credential(accessToken!);
-      await _auth.signInWithCredential(faceCredential);
+    try {
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      saveUserDataToFirestore(userCredential);
+      Get.offAll(const LayoutView());
+    } catch (e) {
+      // Handle sign-in error
+      if (kDebugMode) {
+        print("Error signing in with Google: $e");
+      }
+      // Handle error state, show error message, etc.
+    } finally {
+      isLoading(false);
     }
   }
+
+  // void googleSignInMethod() async {
+  //   isLoading(true);
+  //
+  //   final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  //
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser?.authentication;
+  //
+  //   final credential = GoogleAuthProvider.credential(
+  //       idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+  //   isLoading(false);
+  //
+  //   await _auth.signInWithCredential(credential).then((user) {
+  //     saveUserDataToFirestore(user);
+  //     Get.offAll(const LayoutView());
+  //   });
+  // }
+
+  // void facebookSignInMethod() async {
+  //   FacebookLoginResult result = await _facebookLogin.logIn();
+  //   if (kDebugMode) {
+  //     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+  //   }
+  //
+  //   final accessToken = result.accessToken?.token;
+  //
+  //   if (result.status == FacebookLoginStatus.success) {
+  //     final faceCredential = FacebookAuthProvider.credential(accessToken!);
+  //     await _auth.signInWithCredential(faceCredential);
+  //   }
+  // }
+
+  final ValueNotifier<bool> _isLoadingSignIn = ValueNotifier(false);
+  ValueNotifier<bool> get isLoadingSignIn => _isLoadingSignIn;
 
   void signInWithEmailAndPassword() async {
     try {
-      _isLoading.value = true;
+      isLoading(true);
 
       await _auth
           .signInWithEmailAndPassword(email: email!, password: password!)
           .then((value) async {
         getCurrentUserData(value.user!.uid);
-        _isLoading.value = false;
+        isLoading(false);
 
         if (kDebugMode) {
           print(value);
         }
-        Get.offAll(LayoutView());
+        Get.offAll(const LayoutView());
       });
     } catch (error) {
-      _isLoading.value = false;
+      isLoading(false);
 
       if (kDebugMode) {
         print(error.toString());
@@ -90,13 +135,13 @@ class AuthViewModel extends GetxController {
   }
 
   void signUpWithEmailAndPassword() async {
-    _isLoading.value = true;
     try {
+      isLoading(true);
+
       await _auth
           .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) {
-        _isLoading.value = false;
-        saveUserData(user);
+        saveUserDataToFirestore(user);
         if (kDebugMode) {
           print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
         }
@@ -104,14 +149,16 @@ class AuthViewModel extends GetxController {
         if (kDebugMode) {
           print(user);
         }
-        Get.offAll(LayoutView());
+        isLoading(false);
+
+        Get.offAll(const LayoutView());
       });
     } catch (error) {
-      _isLoading.value = false;
-
       if (kDebugMode) {
         print(error.toString());
       }
+      isLoading(false);
+
       Get.snackbar('Error create account', error.toString(),
           colorText: KPrimaryColor, snackPosition: SnackPosition.BOTTOM);
     }
@@ -134,37 +181,72 @@ class AuthViewModel extends GetxController {
   }
 
   // save data in firestore//
-  void saveUserData(UserCredential user) async {
-    UserModel userModel = UserModel(
-        userId: user.user?.uid,
+  // void saveUserDataToFirestore(UserCredential user) async {
+  //   UserModel userModel = UserModel(
+  //       userId: user.user?.uid,
+  //       userImage: '',
+  //       name: name ?? user.user?.displayName,
+  //       email: user.user?.email);
+  //
+  //   await FireStoreUser().addUserToFireStore(userModel);
+  //   if (kDebugMode) {
+  //     print("set user data in firestore here>>>>>>>>>>>>>>>>>>>>>>>>>");
+  //   }
+  //   setUserData(userModel);
+  //   if (kDebugMode) {
+  //     print(userModel.name);
+  //     print(userModel.email);
+  //     print(userModel.userId);
+  //   }
+  // }
+  void saveUserDataToFirestore(UserCredential user) async {
+    String? userId = user.user?.uid;
+    String? userEmail = user.user?.email;
+
+    // Check if the user already exists in Firestore
+    bool userExists = await FireStoreUser().checkIfUserExists(userEmail!);
+
+    if (userExists) {
+      // User already exists in Firestore, do something (e.g., show an error message)
+      if (kDebugMode) {
+        print("User already exists in Firestore!");
+      }
+      return;
+    } else if (!userExists) {
+      // User doesn't exist, so save the user data to Firestore
+      UserModel userModel = UserModel(
+        userId: userId,
         userImage: '',
         name: name ?? user.user?.displayName,
-        email: user.user?.email);
+        email: userEmail,
+      );
 
-    await FireStoreUser().addUserToFireStore(userModel);
-    if (kDebugMode) {
-      print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
-    }
-    setUserData(userModel);
-    if (kDebugMode) {
-      print(userModel.name);
+      await FireStoreUser().addUserToFireStore(userModel);
+      if (kDebugMode) {
+        print("Set user data in Firestore here >>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      }
+      setUserData(userModel);
     }
   }
 
-  // save data in shared prefs//
+  // save data in shared prefs in case of sign up //
   void setUserData(UserModel userModel) async {
     await localStorageData.setUserData(userModel);
     if (kDebugMode) {
-      print("set user data here>>>>>>>>>>>>>>>>>>>>>>>>>");
+      print("set user data in local cache here>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
     if (kDebugMode) {
       print(userModel.name);
+      print(userModel.email);
+      print(userModel.userId);
     }
-    getUserData();
+    await profileViewModel.getUserData();
   }
 
-  void getUserData() async {
-    await profileViewModel.getUserData();
+  void signOut() async {
+    final currentUser = _auth.currentUser;
+
+    await currentUser?.delete();
   }
 }

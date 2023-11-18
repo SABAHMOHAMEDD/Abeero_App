@@ -1,8 +1,7 @@
 import 'package:abeero/core/binding.dart';
 import 'package:abeero/core/constants.dart';
-import 'package:abeero/view/Splash/splash_view.dart';
 import 'package:abeero/view/layout/control_view.dart';
-import 'package:abeero/view/layout/layout_view.dart';
+import 'package:abeero/view_model/auth_view_model.dart';
 import 'package:abeero/view_model/cart_view_model.dart';
 import 'package:abeero/view_model/fav_view_model.dart';
 import 'package:abeero/view_model/profile_view_model.dart';
@@ -20,10 +19,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   Get.put(CartViewModel());
   Get.put(FavViewModel());
-  Get.put(LocalStorageData());
+
   Get.put(ProfileViewModel());
+  Get.put(LocalStorageData());
+  Get.put(AuthViewModel());
 
   runApp(const MyApp());
 }
@@ -56,6 +58,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: KPrimaryColor),
           useMaterial3: true,
         ),
-        home: LayoutView());
+        home: const ControlView());
   }
 }

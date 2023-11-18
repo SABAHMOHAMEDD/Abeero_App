@@ -12,14 +12,15 @@ class ControlHomeViewModel extends GetxController {
 
   get currentIndex => _currentIndex;
   List<Widget> bottomScreens = [
-    HomeScreen(),
-    CartView(),
-    FavouritesScreen(),
-    ProfileView()
+    const HomeScreen(),
+    const CartView(),
+    const FavouritesScreen(),
+    const ProfileView()
   ];
 
   void changeSelectedIndex(int selectedIndex) {
     _currentIndex = selectedIndex;
+    if (selectedIndex == 1) {}
     HapticFeedback.lightImpact();
 
     update();

@@ -9,16 +9,19 @@ import '../../view_model/cart_view_model.dart';
 import '../empty_cart_view.dart';
 
 class CartView extends StatelessWidget {
+  const CartView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ConditionalBuilder(
-      condition: true,
-      builder: (BuildContext context) {
-        return GetBuilder<CartViewModel>(
-            init: Get.put(CartViewModel()),
-            builder: (controller) => controller.cartProductModel.isNotEmpty
-                ? Scaffold(
-                    body: Column(
+    return GetBuilder<CartViewModel>(
+      builder: (controller) => ConditionalBuilder(
+        condition: controller.cartProductModel.isNotEmpty,
+        builder: (BuildContext context) {
+          return GetBuilder<CartViewModel>(
+              init: Get.put(CartViewModel()),
+              builder: (controller) => controller.cartProductModel.isNotEmpty
+                  ? Scaffold(
+                      body: Column(
                       children: [
                         const SizedBox(
                           height: 20,
@@ -82,7 +85,7 @@ class CartView extends StatelessWidget {
                                     color: KPrimaryColor.withOpacity(0.74)),
                                 child: MaterialButton(
                                   onPressed: () {
-                                    Get.to(CheckoutView());
+                                    Get.to(const CheckoutView(),transition: Transition.fadeIn);
                                   },
                                   child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -102,13 +105,13 @@ class CartView extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                  )
-                : EmptyCartView());
-      },
-      fallback: (BuildContext context) {
-        return EmptyCartView();
-      },
+                    ))
+                  : const CircularProgressIndicator());
+        },
+        fallback: (BuildContext context) {
+          return EmptyCartView();
+        },
+      ),
     );
   }
 }

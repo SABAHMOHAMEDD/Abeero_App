@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 
 class LocalStorageData extends GetxController {
+
   Future<UserModel?> get getUserData async {
     try {
       UserModel userModel = await _getUserData();
@@ -29,15 +30,20 @@ class LocalStorageData extends GetxController {
 
   setUserData(UserModel userModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     await preferences.setString(
         CACHED_USER_DATA, json.encode(userModel.toJson()));
   }
 
   void deleteUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     await preferences.clear().then((value) {
-      print("Clearing the cache>>>>>>>>>>>>>>>>>>>>>>>>>>");
-      print(value);
+      if (kDebugMode) {
+        print("Clearing the cache>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        print(value);
+      }
     });
   }
 }

@@ -14,4 +14,11 @@ class FireStoreUser {
   Future<DocumentSnapshot> getCurrentUser(String userId) async {
     return await _userCollectionRef.doc(userId).get();
   }
+
+  Future<bool> checkIfUserExists(String email) async {
+
+    DocumentSnapshot document =
+        await FirebaseFirestore.instance.collection('Users').doc("email").get();
+    return document.exists;
+  }
 }

@@ -8,8 +8,9 @@ import '../../view_model/home_view_model.dart';
 import 'animated_loading.dart';
 
 class CategoryListviewView extends StatelessWidget {
-  const CategoryListviewView({super.key, required this.catTitle});
-  final List<String> catTitle;
+  const CategoryListviewView({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
@@ -27,7 +28,15 @@ class CategoryListviewView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Get.to(const CategoryView());
+                        controller.getProductsByCategory(
+                            controller.categoryModel[index].categoryId ?? "");
+                        Get.to(
+                            CategoryView(
+                              productModel: controller.productModelCat,
+                              categoryName:
+                                  controller.categoryModel[index].name ?? "",
+                            ),
+                            transition: Transition.fadeIn);
                       },
                       child: Container(
                         height: 100,
@@ -42,6 +51,7 @@ class CategoryListviewView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CachedNetworkImage(
+                              height: 50,
                               imageUrl: controller
                                       .categoryModel[index].categoryImage ??
                                   "",
@@ -51,8 +61,10 @@ class CategoryListviewView extends StatelessWidget {
                                 radius: 28,
                                 backgroundImage: imageProvider,
                               ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                color: KPrimaryColor.withOpacity(.5),
+                              ),
                             ),
                             const SizedBox(
                               height: 10,

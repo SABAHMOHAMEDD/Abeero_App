@@ -3,6 +3,7 @@ import 'package:abeero/model/favourite_model.dart';
 import 'package:abeero/model/product_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,94 @@ class DetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                  width: 100,
+                  height: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Total Price',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '\$',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: KSecondryColor),
+                          ),
+                          Text(
+                            productModel.price ?? "",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: KSecondryColor),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+              GetBuilder<CartViewModel>(
+                init: CartViewModel(),
+                builder: (controller) {
+                  return Container(
+                    width: 200,
+                    height: 60,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20)),
+                        color: KPrimaryColor),
+                    child: MaterialButton(
+                      onPressed: () => controller.addProductToCart(CartModel(
+                          name: productModel.name,
+                          productImage: productModel.productImage,
+                          quantity: 1,
+                          price: productModel.price,
+                          productId: productModel.productId)),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.shopping_cart_outlined,
+                              size: 19,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              'Add To Cart',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
         body: Column(
           children: [
             Stack(
@@ -45,14 +134,19 @@ class DetailsView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                               color: Colors.white.withOpacity(.5)),
                           child: IconButton(
+                            padding: EdgeInsets.zero,
                             onPressed: () {
-                              print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                              if (kDebugMode) {
+                                print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                              }
                               controller.addProductToFav(FavouriteModel(
                                   name: productModel.name,
                                   productImage: productModel.productImage,
                                   price: productModel.price,
                                   productId: productModel.productId));
-                              print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                              if (kDebugMode) {
+                                print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                              }
                             },
                             icon: FavoriteIconWidget(
                               productId: productModel.productId ?? "",
@@ -181,98 +275,9 @@ class DetailsView extends StatelessWidget {
                             color: Colors.grey,
                             letterSpacing: 0.5),
                       ),
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                              width: 100,
-                              height: 60,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Total Price',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '\$',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                            color: KSecondryColor),
-                                      ),
-                                      Text(
-                                        productModel.price ?? "",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                            color: KSecondryColor),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                          GetBuilder<CartViewModel>(
-                            init: CartViewModel(),
-                            builder: (controller) {
-                              return Container(
-                                width: 200,
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20),
-                                        bottomRight: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20)),
-                                    color: KPrimaryColor),
-                                child: MaterialButton(
-                                  onPressed: () => controller.addProductToCart(
-                                      CartModel(
-                                          name: productModel.name,
-                                          productImage:
-                                              productModel.productImage,
-                                          quantity: 1,
-                                          price: productModel.price,
-                                          productId: productModel.productId)),
-                                  child: const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 24),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Icon(
-                                          Icons.shopping_cart_outlined,
-                                          size: 19,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                          'Add To Cart',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
                       const SizedBox(
-                        height: 15,
-                      )
+                        height: 50,
+                      ),
                     ],
                   ),
                 ),

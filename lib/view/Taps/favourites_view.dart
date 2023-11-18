@@ -11,27 +11,29 @@ class FavouritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConditionalBuilder(
-      condition: true,
-      builder: (BuildContext context) {
-        return GetBuilder<FavViewModel>(
-            init: Get.put(FavViewModel()),
-            builder: (controller) => controller.favouriteModel.isNotEmpty
-                ? const Scaffold(
-                    body: Column(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        FavListview(),
-                      ],
-                    ),
-                  )
-                : EmptyFavView());
-      },
-      fallback: (BuildContext context) {
-        return EmptyFavView();
-      },
+    return GetBuilder<FavViewModel>(
+      builder: (controller) => ConditionalBuilder(
+        condition: controller.favouriteModel.isNotEmpty,
+        builder: (BuildContext context) {
+          return GetBuilder<FavViewModel>(
+              init: Get.put(FavViewModel()),
+              builder: (controller) => controller.favouriteModel.isNotEmpty
+                  ? const Scaffold(
+                      body: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          FavListview(),
+                        ],
+                      ),
+                    )
+                  : const EmptyFavView());
+        },
+        fallback: (BuildContext context) {
+          return const EmptyFavView();
+        },
+      ),
     );
   }
 }

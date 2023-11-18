@@ -44,6 +44,16 @@ class FavDatabaseHelper {
         where: '$columnProductId= ?', whereArgs: [favouriteModel.productId]);
   }
 
+  Future<bool> isFavDatabaseEmpty() async {
+    var dbClient = await FavDatabaseHelper.db.database;
+    if (dbClient != null) {
+      var count = Sqflite.firstIntValue(
+          await dbClient.rawQuery('SELECT COUNT(*) FROM $tableProductFav'));
+      return count == 0;
+    }
+    return true;
+  }
+
   getFavProducts() async {
     var dbClient = await database;
     List<Map> maps = await dbClient!.query(tableProductFav);
@@ -71,5 +81,18 @@ class FavDatabaseHelper {
     ))!
         .cast<Map>();
     return maps.isNotEmpty;
+  }
+
+  static Future<void> clearFavDatabase() async {
+    var dbClient = await FavDatabaseHelper.db.database;
+    if (dbClient != null) {
+      print('Before deletion: ${await dbClient.query(tableProductFav)}');
+
+      await dbClient.delete(tableProductFav);
+      print('After deletion: ${await dbClient.query(tableProductFav)}');
+
+      await dbClient.close();
+      _database = null;
+    }
   }
 }

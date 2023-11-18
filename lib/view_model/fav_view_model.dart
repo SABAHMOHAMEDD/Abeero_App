@@ -28,12 +28,33 @@ class FavViewModel extends GetxController {
   }
 
   getFavProducts() async {
-    _loading.value = true;
-    _favouriteModel = await dbHelper.getFavProducts();
+    // Check if the database is empty
+    bool isDatabaseEmpty = await dbHelper.isFavDatabaseEmpty();
+    if (isDatabaseEmpty) {
+      _favouriteModel = [];
+    } else {
+      _favouriteModel = await dbHelper.getFavProducts();
+    }
     if (kDebugMode) {
+      print("fav list length >>>>>>>>>>>>>>>>>>>>>>>>>>");
       print(_favouriteModel.length);
     }
-    _loading.value = false;
+    update();
+  }
+
+  getCartProducts() async {
+    // Check if the database is empty
+    bool isDatabaseEmpty = await dbHelper.isFavDatabaseEmpty();
+    if (isDatabaseEmpty) {
+      _favouriteModel = [];
+    } else {
+      _favouriteModel = await dbHelper.getFavProducts();
+    }
+    if (kDebugMode) {
+      print("cart list length >>>>>>>>>>>>>>>>>>>>>>>>>>");
+      print(_favouriteModel.length);
+    }
+
     update();
   }
 

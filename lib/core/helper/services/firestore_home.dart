@@ -16,6 +16,4 @@ class HomeServices {
     var value = await _productCollectionRef.get();
     return value.docs;
   }
-
-
 }

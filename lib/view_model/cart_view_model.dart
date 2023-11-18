@@ -1,12 +1,16 @@
 import 'package:abeero/model/cart_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../core/constants.dart';
 import '../core/helper/database/cart_database_helper.dart';
 
 class CartViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   final ValueNotifier<bool> _loading = ValueNotifier(false);
+  ValueNotifier<bool> get addToCartloading => _addToCartloading;
+  final ValueNotifier<bool> _addToCartloading = ValueNotifier(false);
   List<CartModel> _cartProductModel = [];
   List<CartModel> get cartProductModel => _cartProductModel;
   var dbHelper = CartDatabaseHelper.db;
@@ -14,8 +18,7 @@ class CartViewModel extends GetxController {
   double _totalPrice = 0.0;
 
   double get totalPrice {
-    return _totalPrice ??
-        0.0; // Return the private variable with a default value of 0
+    return _totalPrice; // Return the private variable with a default value of 0
   }
 
   set totalPrice(double newTotal) {
@@ -26,28 +29,61 @@ class CartViewModel extends GetxController {
 
   CartViewModel() {
     getCartProducts();
+
     getTotalPrice();
   }
 
   addProductToCart(CartModel cartProductModel) async {
     for (int i = 0; i < _cartProductModel.length; i++) {
       if (_cartProductModel[i].productId == cartProductModel.productId) {
+        Get.snackbar('Already Exist', "item is already exist in the cart.",
+            instantInit: true,
+            duration: const Duration(milliseconds: 2500),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            isDismissible: true,
+            colorText: CupertinoColors.white,
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: KPrimaryColor.withOpacity(.85),
+            animationDuration: const Duration(milliseconds: 500));
+
         return;
       }
     }
     await dbHelper.insert(cartProductModel);
     _cartProductModel.add(cartProductModel);
+    Get.snackbar('Added', "item added successfully to the cart.",
+        instantInit: true,
+        duration: const Duration(milliseconds: 2500),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        isDismissible: true,
+        colorText: CupertinoColors.white,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: KPrimaryColor.withOpacity(.85),
+        animationDuration: const Duration(milliseconds: 500));
 
     _totalPrice += (double.parse(cartProductModel.price!) *
-        cartProductModel.quantity!.toInt());
+        cartProductModel.quantity.toInt());
     update();
   }
 
   getCartProducts() async {
-    _loading.value = true;
-    _cartProductModel = await dbHelper.getCartProducts();
-    print(_cartProductModel.length);
-    _loading.value = false;
+    _addToCartloading.value = true;
+
+    // Check if the database is empty
+    bool isDatabaseEmpty = await dbHelper.isCartDatabaseEmpty();
+    if (isDatabaseEmpty) {
+      _cartProductModel = [];
+    } else {
+      _cartProductModel = await dbHelper.getCartProducts();
+    }
+    if (kDebugMode) {
+      print("cart list length >>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+      print(_cartProductModel.length);
+    }
+    _addToCartloading.value = false;
     getTotalPrice();
     update();
   }
@@ -56,7 +92,9 @@ class CartViewModel extends GetxController {
     for (int i = 0; i < _cartProductModel.length; i++) {
       _totalPrice += (double.parse(_cartProductModel[i].price!) *
           _cartProductModel[i].quantity.toInt());
-      print(_totalPrice);
+      if (kDebugMode) {
+        print(_totalPrice);
+      }
       update();
     }
   }
@@ -82,9 +120,20 @@ class CartViewModel extends GetxController {
   }
 
   deleteProductFromCart(String productId, int index) async {
-    _totalPrice -= (double.parse(_cartProductModel[index].price!))*_cartProductModel[index].quantity;
+    _totalPrice -= (double.parse(_cartProductModel[index].price!)) *
+        _cartProductModel[index].quantity;
     await dbHelper.deleteProductFromCart(productId);
     _cartProductModel.removeWhere((product) => product.productId == productId);
+    Get.snackbar('Deleted', "item deleted from the Cart.",
+        instantInit: true,
+        duration: const Duration(milliseconds: 2500),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        isDismissible: true,
+        colorText: CupertinoColors.white,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: KPrimaryColor.withOpacity(.85),
+        animationDuration: const Duration(milliseconds: 500));
 
     update();
   }
