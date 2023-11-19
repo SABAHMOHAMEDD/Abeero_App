@@ -15,6 +15,8 @@ class HomeViewModel extends GetxController {
 
   final ValueNotifier<bool> _isLoadingCat = ValueNotifier(false);
   ValueNotifier<bool> get isLoadingCat => _isLoadingCat;
+  final ValueNotifier<bool> _isLoadingAllProducts = ValueNotifier(false);
+  ValueNotifier<bool> get isLoadingAllProducts => _isLoadingAllProducts;
   // final ValueNotifier<bool> _isLoadingSearch = ValueNotifier(false);
   // ValueNotifier<bool> get isLoadingSearch => _isLoadingSearch;
   var isLoadingSearch = false.obs;
@@ -27,15 +29,52 @@ class HomeViewModel extends GetxController {
 
   List<ProductModel> _productModelCat = [];
   List<ProductModel> get productModelCat => _productModelCat;
-  List<ProductModel> _productModelSearch = [];
+  List<ProductModel> _allProducts = [];
+  List<ProductModel> get allProducts => _allProducts;
+  late List<ProductModel> _productModelSearch = [];
   List<ProductModel> get productModelSearch => _productModelSearch;
 
   HomeViewModel() {
-    getCategory();
+    getCategoryGrid();
     getNewRelease();
+    getAllProducts();
   }
 
-  getCategory() async {
+  void searchProductByName(String productName) {
+    _productModelSearch.clear(); // Clear the previous search results
+
+    // Remove leading and trailing spaces from the search term
+    String searchTerm = productName.trim();
+
+    // Perform the search only if the search term contains at least one non-space character
+    if (searchTerm.isNotEmpty) {
+      // Search in _allProducts list
+      for (ProductModel product in _allProducts) {
+        String? lowercaseProductName = product.name?.toLowerCase();
+        if (lowercaseProductName!.contains(searchTerm.toLowerCase())) {
+          _productModelSearch.add(product);
+        }
+      }
+    }
+  }
+
+  // void searchProductByName(String productName) {
+  //   _productModelSearch.clear();
+  //   _productModelSearch = []; // Clear the previous search results
+  //
+  //   // Convert the search term and product names to lowercase for case-insensitive comparison
+  //   String searchTerm = productName.toLowerCase();
+  //   // Search in _productModelCat list
+  //
+  //   for (ProductModel product in _allProducts) {
+  //     String? lowercaseProductName = product.name?.toLowerCase();
+  //     if (lowercaseProductName!.contains(searchTerm)) {
+  //       _productModelSearch.add(product);
+  //     }
+  //   }
+  // }
+
+  getCategoryGrid() async {
     _isLoading.value = true;
     HomeServices().getCategory().then((value) {
       for (int i = 0; i < value.length; i++) {
@@ -45,6 +84,40 @@ class HomeViewModel extends GetxController {
       }
       update();
     });
+  }
+
+  Future<void> getAllProducts() async {
+    try {
+      _isLoadingAllProducts.value = true;
+      //get all products under all collections that called Products
+      // which here are (new release products and the products in each category)
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collectionGroup('Products').get();
+
+      List<ProductModel> products = [];
+
+      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        Object? data = documentSnapshot.data();
+        print(">>>>>>>>>>>>>>>>>>>>hhrhrhrh>>>>");
+
+        ProductModel product =
+            ProductModel.fromJson(data as Map<String, dynamic>);
+        print(product.name);
+
+        products.add(product);
+      }
+      update();
+
+      _allProducts.assignAll(products);
+
+      _isLoadingAllProducts.value = false;
+    } catch (e) {
+      _isLoadingAllProducts.value = false;
+
+      if (kDebugMode) {
+        print('Error retrieving products: $e');
+      }
+    }
   }
 
   Future<List<ProductModel>> getProductsByCategory(String categoryId) async {
@@ -99,56 +172,5 @@ class HomeViewModel extends GetxController {
 
   void getUserData() async {
     await profileViewModel.getUserData();
-  }
-
-  // Function to search for items by product name in two collections
-  Future<List<ProductModel>> searchProductByName(String productName) async {
-    isLoadingSearch(true);
-
-    _productModelSearch = [];
-
-    try {
-      print("<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>");
-
-      List<QuerySnapshot> querySnapshots = await Future.wait([
-        FirebaseFirestore.instance
-            .collectionGroup('Products') // Search in the first collection
-            .where('name', isEqualTo: productName)
-            .get(),
-        FirebaseFirestore.instance
-            .collection('Categories') // Search in the second collection
-            .doc('48o5FaCgrgBczFgJoqlK') // Add the document ID if needed
-            .collection('Products') // Search in the subcollection
-            .where('name', isEqualTo: productName)
-            .get(),
-      ]);
-      print("1>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-      for (QuerySnapshot querySnapshot in querySnapshots) {
-        print("2>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-        for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-          Object? data = documentSnapshot.data();
-          ProductModel product =
-              ProductModel.fromJson(data as Map<String, dynamic>);
-          _productModelSearch.add(product);
-          if (kDebugMode) {
-            print(_productModelSearch.length);
-            print(_productModelSearch[0].name);
-          }
-        }
-      }
-      isLoadingSearch(false);
-
-      update();
-    } catch (e) {
-      isLoadingSearch(false);
-
-      if (kDebugMode) {
-        print('Error searching products by name: $e');
-      }
-    }
-
-    return _productModelSearch;
   }
 }

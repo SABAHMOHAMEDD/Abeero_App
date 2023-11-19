@@ -51,7 +51,7 @@ class SearchBarView extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(const SearchListviewView());
+                  Get.to(() => const SearchListviewView());
 
                   controller.searchProductByName(searchQuery.text);
                 },
