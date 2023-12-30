@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../core/widgets/fav_listview.dart';
 import '../../view_model/fav_view_model.dart';
-import '../empty_fav_view.dart';
+import '../EmptyView/empty_fav_view.dart';
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({super.key});

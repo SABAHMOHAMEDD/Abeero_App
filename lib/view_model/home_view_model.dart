@@ -1,6 +1,7 @@
 import 'package:abeero/model/product_model.dart';
 import 'package:abeero/view_model/profile_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -17,8 +18,7 @@ class HomeViewModel extends GetxController {
   ValueNotifier<bool> get isLoadingCat => _isLoadingCat;
   final ValueNotifier<bool> _isLoadingAllProducts = ValueNotifier(false);
   ValueNotifier<bool> get isLoadingAllProducts => _isLoadingAllProducts;
-  // final ValueNotifier<bool> _isLoadingSearch = ValueNotifier(false);
-  // ValueNotifier<bool> get isLoadingSearch => _isLoadingSearch;
+
   var isLoadingSearch = false.obs;
 
   final List<CategoryModel> _categoryModel = [];
@@ -29,10 +29,11 @@ class HomeViewModel extends GetxController {
 
   List<ProductModel> _productModelCat = [];
   List<ProductModel> get productModelCat => _productModelCat;
-  List<ProductModel> _allProducts = [];
+  final List<ProductModel> _allProducts = [];
   List<ProductModel> get allProducts => _allProducts;
-  late List<ProductModel> _productModelSearch = [];
+  late final List<ProductModel> _productModelSearch = [];
   List<ProductModel> get productModelSearch => _productModelSearch;
+  final TextEditingController searchQuery = TextEditingController();
 
   HomeViewModel() {
     getCategoryGrid();
@@ -40,11 +41,13 @@ class HomeViewModel extends GetxController {
     getAllProducts();
   }
 
-  void searchProductByName(String productName) {
+  void searchProductByName() {
+    String searchTerm = searchQuery.text.trim();
+
+    isLoadingSearch(true);
     _productModelSearch.clear(); // Clear the previous search results
 
     // Remove leading and trailing spaces from the search term
-    String searchTerm = productName.trim();
 
     // Perform the search only if the search term contains at least one non-space character
     if (searchTerm.isNotEmpty) {
@@ -56,23 +59,8 @@ class HomeViewModel extends GetxController {
         }
       }
     }
+    isLoadingSearch(false);
   }
-
-  // void searchProductByName(String productName) {
-  //   _productModelSearch.clear();
-  //   _productModelSearch = []; // Clear the previous search results
-  //
-  //   // Convert the search term and product names to lowercase for case-insensitive comparison
-  //   String searchTerm = productName.toLowerCase();
-  //   // Search in _productModelCat list
-  //
-  //   for (ProductModel product in _allProducts) {
-  //     String? lowercaseProductName = product.name?.toLowerCase();
-  //     if (lowercaseProductName!.contains(searchTerm)) {
-  //       _productModelSearch.add(product);
-  //     }
-  //   }
-  // }
 
   getCategoryGrid() async {
     _isLoading.value = true;
@@ -98,11 +86,12 @@ class HomeViewModel extends GetxController {
 
       for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
         Object? data = documentSnapshot.data();
-        print(">>>>>>>>>>>>>>>>>>>>hhrhrhrh>>>>");
 
         ProductModel product =
             ProductModel.fromJson(data as Map<String, dynamic>);
-        print(product.name);
+        if (kDebugMode) {
+          print(product.name);
+        }
 
         products.add(product);
       }

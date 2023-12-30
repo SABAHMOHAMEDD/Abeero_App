@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants.dart';
-import '../../view/categories_view.dart';
+import '../../view/Taps/categories_view.dart';
 import '../../view_model/home_view_model.dart';
 import 'animated_loading.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:abeero/view/details_view.dart';
+import 'package:abeero/view/Taps/details_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 

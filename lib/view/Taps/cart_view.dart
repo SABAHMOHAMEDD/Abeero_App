@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../core/constants.dart';
 import '../../core/widgets/cart_listview.dart';
 import '../../view_model/cart_view_model.dart';
-import '../empty_cart_view.dart';
+import '../EmptyView/empty_cart_view.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -85,7 +85,8 @@ class CartView extends StatelessWidget {
                                     color: KPrimaryColor.withOpacity(0.74)),
                                 child: MaterialButton(
                                   onPressed: () {
-                                    Get.to(const CheckoutView(),transition: Transition.fadeIn);
+                                    Get.to(const CheckoutView(),
+                                        transition: Transition.fadeIn);
                                   },
                                   child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +110,7 @@ class CartView extends StatelessWidget {
                   : const CircularProgressIndicator());
         },
         fallback: (BuildContext context) {
-          return EmptyCartView();
+          return const EmptyCartView();
         },
       ),
     );

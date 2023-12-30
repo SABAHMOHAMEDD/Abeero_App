@@ -1,4 +1,4 @@
-import 'package:abeero/view/details_view.dart';
+import 'package:abeero/view/Taps/details_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +22,7 @@ class NewReleaseListviewView extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(left: 15),
               child: SizedBox(
-                height: screenSize.height * .60,
+                height: screenSize.height * .5,
                 child: GridView.builder(
                   itemCount: controller.productModel.length,
                   physics: const BouncingScrollPhysics(),

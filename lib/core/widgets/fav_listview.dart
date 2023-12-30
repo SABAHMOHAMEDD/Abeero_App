@@ -1,4 +1,4 @@
-import 'package:abeero/view/empty_fav_view.dart';
+import 'package:abeero/view/EmptyView/empty_fav_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

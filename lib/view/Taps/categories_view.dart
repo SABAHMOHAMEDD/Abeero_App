@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../core/IconBroken.dart';
-import '../core/constants.dart';
-import '../core/widgets/animated_loading.dart';
-import '../view_model/home_view_model.dart';
+import '../../core/IconBroken.dart';
+import '../../core/constants.dart';
+import '../../core/widgets/animated_loading.dart';
+import '../../view_model/home_view_model.dart';
 import 'details_view.dart';
 
 class CategoryView extends StatelessWidget {

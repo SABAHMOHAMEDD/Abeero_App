@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 const String CACHED_USER_DATA = 'CACHED_USER_DATA';
 
 const Color KPrimaryColor = Color(0xFF6D8B74);

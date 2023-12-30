@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../view/Taps/cart_view.dart';
 import '../view/Taps/favourites_view.dart';
-import '../view/Taps/home_view.dart';
+import '../view/home_view.dart';
 import '../view/Taps/profile_view.dart';
 
 class ControlHomeViewModel extends GetxController {

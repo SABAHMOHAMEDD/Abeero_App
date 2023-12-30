@@ -7,11 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../core/IconBroken.dart';
-import '../core/constants.dart';
-import '../core/widgets/fav_icon_widget.dart';
-import '../view_model/cart_view_model.dart';
-import '../view_model/fav_view_model.dart';
+import '../../core/IconBroken.dart';
+import '../../core/constants.dart';
+import '../../core/widgets/fav_icon_widget.dart';
+import '../../view_model/cart_view_model.dart';
+import '../../view_model/fav_view_model.dart';
 
 class DetailsView extends StatelessWidget {
   const DetailsView({super.key, required this.productModel});

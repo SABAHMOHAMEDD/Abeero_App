@@ -1,8 +1,6 @@
 import 'package:abeero/core/widgets/search_listview_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../../core/constants.dart';
 import '../../view_model/home_view_model.dart';
@@ -40,7 +38,7 @@ class SearchBarView extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  controller: searchQuery,
+                  controller: controller.searchQuery,
                   onChanged: (value) {},
                   decoration: const InputDecoration(
                       hintText: 'Search',
@@ -53,7 +51,7 @@ class SearchBarView extends StatelessWidget {
                 onTap: () {
                   Get.to(() => const SearchListviewView());
 
-                  controller.searchProductByName(searchQuery.text);
+                  controller.searchProductByName();
                 },
                 child: Image(
                   image: const AssetImage(

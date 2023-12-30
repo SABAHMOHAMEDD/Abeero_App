@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../view/details_view.dart';
-import '../../view/empty_search_view.dart';
+import '../../view/Taps/details_view.dart';
+import '../../view/EmptyView/empty_search_view.dart';
 import '../../view_model/home_view_model.dart';
 import '../IconBroken.dart';
 import '../constants.dart';
+import '../helper/function.dart';
 import 'animated_loading.dart';
 
 class SearchListviewView extends StatelessWidget {
@@ -36,10 +36,7 @@ class SearchListviewView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                if (kDebugMode) {
-                                  print(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                                }
-                                Get.to(DetailsView(
+                                Get.to(() => DetailsView(
                                     productModel:
                                         controller.productModelSearch[index]));
                               },
@@ -88,17 +85,24 @@ class SearchListviewView extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Text(
-                                              controller
-                                                      .productModelSearch[index]
-                                                      .name ??
-                                                  "",
+                                          RichText(
+                                            text: TextSpan(
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 17,
                                                 color: Colors.black
                                                     .withOpacity(0.7),
-                                              )),
+                                              ),
+                                              children: highlightSearchQuery(
+                                                controller
+                                                        .productModelSearch[
+                                                            index]
+                                                        .name ??
+                                                    '',
+                                                controller.searchQuery.text,
+                                              ),
+                                            ),
+                                          ),
                                           Text(
                                             controller.productModelSearch[index]
                                                     .description ??
@@ -151,3 +155,4 @@ class SearchListviewView extends StatelessWidget {
                   ));
   }
 }
+
